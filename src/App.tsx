@@ -1,24 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { InteractiveMapEurope } from './InteractiveMapEurope';
+
+interface FetchProps {
+  countryCode: string;
+  year: string;
+}
 
 function App() {
+  
+  const fetchData = async ({countryCode, year}: FetchProps) => {
+    const response = await fetch(`https://api.worldbank.org/v2/country/${countryCode}/indicator/NY.GDP.MKTP.CD?date=${year}&format=json`)
+    // console.log(await response.json())
+    const data = await response.json()
+    console.log(data)
+  } 
+  fetchData({countryCode: 'IT', year: '2007'})
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>test</h1>
+      <InteractiveMapEurope />
     </div>
   );
 }
