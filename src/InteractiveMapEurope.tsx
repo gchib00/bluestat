@@ -5,7 +5,7 @@ import styled from 'styled-components'
 //stlying:
 const MapContainer = styled.main`
   width: 60vw;
-  height: 86vh;
+  height: 87.2vh;
   border: 3px solid black;
 `
 
