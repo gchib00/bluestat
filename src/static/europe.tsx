@@ -26,7 +26,7 @@ interface Props {
 }
 const SvgComponent = ({countriesByGDP}: Props) => {
   const determineColor = (country: string) => { //formulate which color the country should get:
-    if (countriesByGDP.length === 0) {return "white"}
+    if (!countriesByGDP || countriesByGDP.length === 0) {return "white"}
     //determine highest value:
     const highestValue = countriesByGDP[countriesByGDP.length-1].value;
     const countryData = countriesByGDP.find(state => state.country.id === country)
