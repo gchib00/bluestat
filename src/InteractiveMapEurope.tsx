@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import EuropeSVG from './static/europe'
 import styled from 'styled-components'
 import { CountryData } from './types'
+import { DataTypeDropdown } from './DataTypeDropdown'
 
 //stlying:
 const MapContainer = styled.main`
@@ -17,8 +18,7 @@ export const InteractiveMapEurope = () => {
   const [dataType, setDataType] = useState<string>("GDP")
   const [countryData, setCountryData] = useState<CountryData[]>([])
   const [countriesByGDP, setCountriesByGDP] = useState<CountryData[]>([])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedYear, setSelectedYear] = useState<string>("2020")
+  const [selectedYear, setSelectedYear] = useState<string>("2019")
 
   const fetchData = async (year: string) => {
     const euStatesParam = euStates.join(";") //create param to specify relevant countries for the api endpoint
@@ -27,7 +27,7 @@ export const InteractiveMapEurope = () => {
         case("GDP"): {
           return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/NY.GDP.MKTP.CD?date=${year}&format=json`)
         }
-        case("POP"): {
+        case("Population"): {
           return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/SP.POP.TOTL?date=${year}&format=json`)
         }
         default: return null
@@ -56,11 +56,7 @@ export const InteractiveMapEurope = () => {
 
   return (
     <>
-    <label htmlFor="dataType">Choose data type:</label>
-    <select name="dataType" id="cars" onChange={(e) => setDataType(e.target.value)}>
-      <option value="GDP">GDP</option>
-      <option value="POP">Population</option>
-    </select>
+    <DataTypeDropdown dataType={dataType} setDataType={setDataType} selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
     <MapContainer>
       <EuropeSVG countriesByGDP={countriesByGDP} />
     </MapContainer>
