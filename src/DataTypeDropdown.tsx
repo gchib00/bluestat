@@ -1,4 +1,4 @@
-import { Button, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Button, CircularProgress, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
@@ -17,23 +17,16 @@ const FormContainer = styled.form`
   min-width: 360px;
   align-items: center;
 `
-//types:
-// interface Props {
-//   dataType: string;
-//   selectedYear: string;
-//   setDataType: React.Dispatch<React.SetStateAction<string>>;
-//   setSelectedYear: React.Dispatch<React.SetStateAction<string>>;
-// }
-// export const DataTypeDropdown = ({dataType, selectedYear, setDataType, setSelectedYear}: Props) => {
 interface DataToProcess {
   dataType: string;
   selectedYear: string;
 }
 interface Props {
+  loader: boolean;
   dataToProcess: DataToProcess;
   setDataToProcess: React.Dispatch<React.SetStateAction<DataToProcess>>;
 }
-export const DataTypeDropdown = ({dataToProcess, setDataToProcess}: Props) => {
+export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Props) => {
   const [selectedYear, setSelectedYear] = useState<string>(dataToProcess.selectedYear)
   const [dataType, setDataType] = useState<string>(dataToProcess.dataType)
 
@@ -78,8 +71,9 @@ export const DataTypeDropdown = ({dataToProcess, setDataToProcess}: Props) => {
         onClick={handleSubmit}
         variant="contained"
         size="large"
-        sx={{height: "40px"}}
-      >Render Data
+        sx={{height: "40px", width: "154px"}}
+      >
+        {loader ? <CircularProgress size={"24px"} color="inherit" /> : "Render Data" }
       </Button>
     </Container>
   )  

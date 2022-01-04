@@ -68,7 +68,7 @@ export const InteractiveMapEurope = () => {
 
   return (
     <>
-    <DataTypeDropdown dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
+    <DataTypeDropdown loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
     <MapContainer>
       <EuropeSVG loader={loader} countriesByGDP={countriesByGDP} />
     </MapContainer>
