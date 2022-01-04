@@ -42,7 +42,6 @@ export const DataTypeDropdown = ({dataToProcess, setDataToProcess}: Props) => {
       dataType: dataType,
       selectedYear: selectedYear
     })
-    alert("shound have re-rendered")
   }
 
   return (

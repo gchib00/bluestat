@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import EuropeSVG from './static/europe'
+import EuropeSVG from './EuropeSVG'
 import styled from 'styled-components'
 import { CountryData } from './types'
 import { DataTypeDropdown } from './DataTypeDropdown'
@@ -7,26 +7,26 @@ import { DataTypeDropdown } from './DataTypeDropdown'
 //stlying:
 const MapContainer = styled.main`
   width: 50vw;
+  min-width: 280px;
+  min-height: 250px;
   margin: 0px 0px 0px 4px;
   border: 3px solid black;
   display:flex;
   justify-content: center;
   align-items: center;
 `
-
+//types:
 interface DataToProcess {
   dataType: string;
   selectedYear: string;
 }
-
 //list of eu countries - necessary for filtering worldbank data:
 const euStates=["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"]
 export const InteractiveMapEurope = () => {
-  // const [dataType, setDataType] = useState<string>("GDP")
   const [countryData, setCountryData] = useState<CountryData[]>([])
   const [countriesByGDP, setCountriesByGDP] = useState<CountryData[]>([])
-  // const [selectedYear, setSelectedYear] = useState<string>("2019")
   const [dataToProcess, setDataToProcess] = useState<DataToProcess>({dataType: "None", selectedYear: "2019"})
+  const [loader, setLoader] = useState<boolean>(false) //loading animation switch
 
   const fetchData = async (selectedYear: string) => {
     const euStatesParam = euStates.join(";") //create param to specify relevant countries for the api endpoint
@@ -38,23 +38,22 @@ export const InteractiveMapEurope = () => {
         case("Population"): {
           return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/SP.POP.TOTL?date=${selectedYear}&format=json`)
         }
-        default: return null
+        default: {
+          setLoader(false)
+          return null
+        }
       }
     }
+    setLoader(true)
     const response = await determineResponseType()
     if (!response) {return null}
     const data = await response.json()
     if(data) { //filter out irrelevant countries (non-EU) and set to state:
       const newArr = data[1].filter((state:any) => euStates.includes(state.country.id))
-      console.log('newArr=', newArr)
-      return setCountryData(newArr)
+      setCountryData(newArr)
+      setLoader(false)
     }
   }
-
-  // useEffect(() => {
-  //   console.log("dataType was changed to", dataToProcess.dataType)
-  //   fetchData(selectedYear)
-  // }, [selectedYear, dataType])
 
   useEffect(() => {
     console.log("dataType was changed to", dataToProcess.dataType)
@@ -69,10 +68,9 @@ export const InteractiveMapEurope = () => {
 
   return (
     <>
-    {/* <DataTypeDropdown dataType={dataType} setDataType={setDataType} selectedYear={selectedYear} setSelectedYear={setSelectedYear} /> */}
     <DataTypeDropdown dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
     <MapContainer>
-      <EuropeSVG countriesByGDP={countriesByGDP} />
+      <EuropeSVG loader={loader} countriesByGDP={countriesByGDP} />
     </MapContainer>
     </>
   )
