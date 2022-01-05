@@ -24,7 +24,7 @@ interface DataToProcess {
 const euStates=["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"]
 export const InteractiveMapEurope = () => {
   const [countryData, setCountryData] = useState<CountryData[]>([])
-  const [countriesByGDP, setCountriesByGDP] = useState<CountryData[]>([])
+  const [countriesData, setCountriesData] = useState<CountryData[]>([])
   const [dataToProcess, setDataToProcess] = useState<DataToProcess>({dataType: "None", selectedYear: "2019"})
   const [loader, setLoader] = useState<boolean>(false) //loading animation switch
 
@@ -67,14 +67,14 @@ export const InteractiveMapEurope = () => {
   useEffect(() => {
     //re-arrange the existing data from highest to lowerst by GDP:
     const orderedArr = [...countryData].sort((a:CountryData, b:CountryData) => a.value-b.value)
-    setCountriesByGDP(orderedArr)
+    setCountriesData(orderedArr)
   }, [countryData])
 
   return (
     <>
     <DataTypeDropdown loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
     <MapContainer>
-      <EuropeSVG loader={loader} countriesByGDP={countriesByGDP} />
+      <EuropeSVG loader={loader} countriesData={countriesData} />
     </MapContainer>
     </>
   )

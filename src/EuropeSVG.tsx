@@ -24,27 +24,38 @@ const Background = styled.path``
 //types:
 interface Props {
   loader: boolean;
-  countriesByGDP: CountryData[];
+  countriesData: CountryData[];
 }
-const SvgComponent = ({loader, countriesByGDP}: Props) => {
+const SvgComponent = ({loader, countriesData}: Props) => {
   const determineColor = (country: string) => { //formulate which color the country should get:
-    if (!countriesByGDP || countriesByGDP.length === 0) {return "white"}
+    if (!countriesData || countriesData.length === 0) {return "white"}
     //determine highest value:
-    const highestValue = countriesByGDP[countriesByGDP.length-1].value;
-    const countryData = countriesByGDP.find(state => state.country.id === country)
+    const highestValue = countriesData[countriesData.length-1].value;
+    const countryData = countriesData.find(state => state.country.id === country)
     if (!countryData) {return "black"}
     //assign color accordingly:
-    if (countryData.value < highestValue*5/100) {return "#b8e7f8"}
-    if (countryData.value < highestValue*10/100) {return "#72bbd6"}
-    if (countryData.value < highestValue*20/100) {return "#5cb3d3"}
-    if (countryData.value < highestValue*30/100) {return "#3ba2c7"}
-    if (countryData.value < highestValue*40/100) {return "#128cb9"}
-    if (countryData.value < highestValue*50/100) {return "#086c94"}
-    if (countryData.value < highestValue*60/100) {return "#03597e"}
-    if (countryData.value < highestValue*70/100) {return "#015c80"}
-    if (countryData.value < highestValue*80/100) {return "#024a66"}
-    if (countryData.value < highestValue*90/100) {return "#042d3d"}
-    if (countryData.value === highestValue) {return "#002e41"}
+    switch(true) {
+      case(countryData.value < highestValue*5/100): {return "#95dbf9"}
+      case(countryData.value < highestValue*10/100): {return "#82d5f8"}
+      case(countryData.value < highestValue*15/100): {return "#6fcef6"}
+      case(countryData.value < highestValue*20/100): {return "#5bc8f5"}
+      case(countryData.value < highestValue*25/100): {return "#48c1f4"}
+      case(countryData.value < highestValue*30/100): {return "#35bbf3"}
+      case(countryData.value < highestValue*35/100): {return "#21b4f2"}
+      case(countryData.value < highestValue*40/100): {return "#0eaef1"}
+      case(countryData.value < highestValue*45/100): {return "#0da0de"}
+      case(countryData.value < highestValue*50/100): {return "#0c92ca"}
+      case(countryData.value < highestValue*55/100): {return "#0b84b7"}
+      case(countryData.value < highestValue*60/100): {return "#0a76a4"}
+      case(countryData.value < highestValue*65/100): {return "#096890"}
+      case(countryData.value < highestValue*70/100): {return "#075a7d"}
+      case(countryData.value < highestValue*75/100): {return "#064c6a"}
+      case(countryData.value < highestValue*80/100): {return "#053e57"}
+      case(countryData.value < highestValue*85/100): {return "#043143"} 
+      case(countryData.value < highestValue*90/100): {return "#032330"}
+      case(countryData.value < highestValue*95/100): {return "#02151d"}
+      case(countryData.value === highestValue): {return "#01070a"}
+    }
   }
 
   //turns on dimmer when the map data is loading:
