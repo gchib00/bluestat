@@ -53,6 +53,7 @@ export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Prop
         >
           <MenuItem value="None">None</MenuItem>
           <MenuItem value="GDP">GDP</MenuItem>
+          <MenuItem value="GDP Per Capita">GDP Per Capita</MenuItem>
           <MenuItem value="Population">Population</MenuItem>
         </Select>
         <TextField 

@@ -30,13 +30,16 @@ export const InteractiveMapEurope = () => {
 
   const fetchData = async (selectedYear: string) => {
     const euStatesParam = euStates.join(";") //create param to specify relevant countries for the api endpoint
-    const determineResponseType = () => {
+    const determineResponseType = async () => {
       switch(dataToProcess.dataType) {
         case("GDP"): {
           return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/NY.GDP.MKTP.CD?date=${selectedYear}&format=json`)
         }
         case("Population"): {
           return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/SP.POP.TOTL?date=${selectedYear}&format=json`)
+        }
+        case("GDP Per Capita"): {
+          return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/NY.GDP.PCAP.CD?date=${selectedYear}&format=json`)
         }
         default: {
           setLoader(false)
@@ -47,6 +50,7 @@ export const InteractiveMapEurope = () => {
     setLoader(true)
     const response = await determineResponseType()
     if (!response) {return null}
+    if (dataToProcess.dataType === "GDP per capita") {return null}
     const data = await response.json()
     if(data) { //filter out irrelevant countries (non-EU) and set to state:
       const newArr = data[1].filter((state:any) => euStates.includes(state.country.id))
