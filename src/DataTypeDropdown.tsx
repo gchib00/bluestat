@@ -54,9 +54,10 @@ export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Prop
           <MenuItem value="None">None</MenuItem>
           <MenuItem value="GDP">GDP</MenuItem>
           <MenuItem value="GDP Per Capita">GDP Per Capita</MenuItem>
+          <MenuItem value="GDP Growth">GDP Growth</MenuItem>
           <MenuItem value="Population">Population</MenuItem>
         </Select>
-        <TextField 
+        <TextField
             type="number"
             sx={{width: 80, marginLeft: 1}}
             InputProps={{ inputProps: {max: 2020, min: 1990} }}

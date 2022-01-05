@@ -41,6 +41,9 @@ export const InteractiveMapEurope = () => {
         case("GDP Per Capita"): {
           return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/NY.GDP.PCAP.CD?date=${selectedYear}&format=json`)
         }
+        case("GDP Growth"): {
+          return fetch(`https://api.worldbank.org/v2/country/${euStatesParam}/indicator/NY.GDP.MKTP.KD.ZG?date=${selectedYear}&format=json`)
+        }        
         default: {
           setLoader(false)
           return null
