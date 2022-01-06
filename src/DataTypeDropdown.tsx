@@ -19,6 +19,7 @@ const FormContainer = styled.form`
 `
 interface DataToProcess {
   dataType: string;
+  visibleCountries: string;
   selectedYear: string;
 }
 interface Props {
@@ -29,10 +30,12 @@ interface Props {
 export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Props) => {
   const [selectedYear, setSelectedYear] = useState<string>(dataToProcess.selectedYear)
   const [dataType, setDataType] = useState<string>(dataToProcess.dataType)
+  const [visibleCountries, setVisibleCountries] = useState<string>(dataToProcess.visibleCountries)
 
   const handleSubmit = () => {
     setDataToProcess({
       dataType: dataType,
+      visibleCountries: visibleCountries,
       selectedYear: selectedYear
     })
   }
@@ -56,6 +59,15 @@ export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Prop
           <MenuItem value="GDP Per Capita">GDP Per Capita</MenuItem>
           <MenuItem value="GDP Growth">GDP Growth</MenuItem>
           <MenuItem value="Population">Population</MenuItem>
+        </Select>
+        <Select
+          value={visibleCountries}
+          sx={{width: 150, marginLeft: 1, height: 40 }}
+          onChange={(e) => setVisibleCountries(e.target.value)}
+        >
+          <MenuItem value="EU">EU</MenuItem>
+          <MenuItem value="EEA">EEA</MenuItem>
+          <MenuItem value="Europe+">Europe+</MenuItem>
         </Select>
         <TextField
             type="number"
