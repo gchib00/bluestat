@@ -14,7 +14,7 @@ const Container = styled.div`
 const FormContainer = styled.form`
   display: flex;
   justify-content: space-between;
-  min-width: 360px;
+  min-width: 480px;
   align-items: center;
 `
 interface DataToProcess {
@@ -59,10 +59,11 @@ export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Prop
           <MenuItem value="GDP Per Capita">GDP Per Capita</MenuItem>
           <MenuItem value="GDP Growth">GDP Growth</MenuItem>
           <MenuItem value="Population">Population</MenuItem>
+          <MenuItem value="Population Density">Population Density (people per sq.km)</MenuItem>
         </Select>
         <Select
           value={visibleCountries}
-          sx={{width: 150, marginLeft: 1, height: 40 }}
+          sx={{width: 100, marginLeft: 1, height: 40 }}
           onChange={(e) => setVisibleCountries(e.target.value)}
         >
           <MenuItem value="EU">EU</MenuItem>
@@ -71,7 +72,7 @@ export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Prop
         </Select>
         <TextField
             type="number"
-            sx={{width: 80, marginLeft: 1}}
+            sx={{width: 90, marginLeft: 1}}
             InputProps={{ inputProps: {max: 2020, min: 1990} }}
             size="small"    
             defaultValue={selectedYear}      

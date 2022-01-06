@@ -12,12 +12,21 @@ const EUState = styled.path`
 `
 const MicroState = styled.path`
   fill: white;
+  transition: 500ms;
   &:hover{
     fill: #00394f;
     cursor: pointer;
   }
 `
 const State = styled.path`
+  fill: #292929;
+  transition: 500ms;
+  &:hover{
+    cursor: pointer;
+    filter: brightness(1.55);
+  }
+`
+const OuterState = styled.path`
   fill: #292929;
 `
 const Background = styled.path``
@@ -28,7 +37,7 @@ interface Props {
 }
 const SvgComponent = ({loader, countriesData}: Props) => {
   const determineColor = (country: string) => { //formulate which color the country should get:
-    if (!countriesData || countriesData.length === 0) {return "white"}
+    if (!countriesData || countriesData.length === 0) {return "#292929"}
     //determine highest value:
     const highestValue = countriesData[countriesData.length-1].value;
     const countryData = countriesData.find(state => state.country.id === country)
@@ -52,8 +61,8 @@ const SvgComponent = ({loader, countriesData}: Props) => {
       case(countryData.value < highestValue*75/100): {return "#064c6a"}
       case(countryData.value < highestValue*80/100): {return "#053e57"}
       case(countryData.value < highestValue*85/100): {return "#043143"} 
-      case(countryData.value < highestValue*90/100): {return "#032330"}
-      case(countryData.value < highestValue*95/100): {return "#04222e"}
+      case(countryData.value < highestValue*90/100): {return "#042735"}
+      case(countryData.value < highestValue*95/100): {return "#041f2a"}
       case(countryData.value === highestValue): {return "#02151d"}
     }
   }
@@ -146,7 +155,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           id="PT"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -171,7 +180,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           className="eu europe"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -183,7 +192,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           className="africa"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -249,7 +258,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           className="eu europe"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -285,7 +294,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           d="M2124.448-109.66v29.711c-.54-.27-1.35-.54-1.891-.81-4.054-1.62-4.595-5.942-7.837-8.373-1.082-.54-2.703-.81-3.784-1.62-1.351-1.351-1.081-4.322-2.973-5.132-2.162-.81-4.594 0-6.486 1.08-2.432 1.35-4.324 6.752-6.756 8.373-3.784 2.701-3.243-1.08-4.324 2.971-1.351 5.132-.81 10.264 0 15.396.81 5.132.54-3.241 3.783-.54 2.703 2.16 1.622 7.562 2.973 10.263.54.54 10.81 9.184 7.567 9.184-2.432 0-5.945-6.753-8.108-7.833-1.62-.81-3.513-1.35-5.134-1.62-.81-.27-1.892.81-2.432.27-1.081-1.351-.54-3.782-1.622-4.592-1.351-1.08-4.054.27-5.135-1.08 1.622-6.213 2.433-14.046 5.135-20.258 2.432-5.402 15.405-22.148 21.08-23.769 3.513-1.08 10.27-1.89 15.944-1.62zm0-60.231c-4.053-6.213-8.107-12.695-12.161-18.907-2.162-3.241-18.647-25.93-18.917-27.55 0-2.701 6.486-9.724 8.107-11.885 7.027-10.804 14.053-21.878 21.08-32.682.54-1.08 1.35-2.16 1.891-3.781v94.805zm0 151.795c-.27 0-.54.27-.54.54-.27 1.08 0 1.62.54 2.161-1.35-.54-3.513.27-4.864-.54-1.081-1.08-.27-3.241-1.351-4.322-.811-1.08-2.703-.54-3.514-1.62-4.324-5.672-1.35-10.264-3.513-15.666-.81-2.16-2.432-6.482-3.513-9.183-.27-.81-2.432-1.891-1.622-1.891 5.946 0 8.649 4.592 8.919 4.592 1.891-.54 3.513-1.621 4.594-2.972.54-1.08-.81-2.97 0-3.24 1.351-.27 2.973 2.97 3.784 1.89 1.35-1.89-1.082-8.643.81-7.293.27 0 .27.27.27.27v37.274z"
           transform="translate(-126.949 1009.427)"
         /> */}
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -349,7 +358,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           className="europe"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -361,7 +370,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           id="saudiArabia"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -386,7 +395,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           id="azerbaijan"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -398,7 +407,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           id="iran"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -631,7 +640,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
           className="eu europe"
           transform="translate(-126.949 1009.427)"
         />
-        <State
+        <OuterState
           style={{
             fillOpacity: 1,
             stroke: "#000",
@@ -639,6 +648,7 @@ const SvgComponent = ({loader, countriesData}: Props) => {
             strokeOpacity: 1,
           }}
           d="M1765.556 436.75c2.432-.81 9.729-1.62 11.35-4.052.27-.27 0-6.752.27-7.022.271-.27 1.082 1.08 1.622.81 3.514-2.16 7.838-12.424 9.189-15.936.54-.81-5.946 1.35-4.054-3.51.81-1.892 1.621-3.782 2.973-5.403l7.567-2.7c0-1.351-3.514-.541-3.784-1.892-.81-5.131 6.216-8.643 6.756-12.964.27-.81-1.35-.27-1.62-.54-1.622-2.701 0-4.052-2.974-6.483-3.513-2.7-6.756.81-7.026-.54-.27-1.35 1.892-2.431 1.892-3.781s-2.163-1.621-3.244-1.891c0-.27-5.675 3.781-9.999 4.862.811 1.35 1.351 2.43 1.351 3.781.27 5.672-2.161 1.35-4.323 4.322-.27.27 1.08.81 1.08 1.35-.54 1.62-1.35 2.971-1.891 4.322-.27.81-1.622 1.08-1.352 1.89 0 1.35 2.973 8.373 2.433 9.724-1.081 1.89-3.243 2.971-3.784 5.132-.27 1.08 1.351 1.89 1.622 2.97.27 5.133-2.162 9.454-2.703 14.046-.27 2.971.54 5.942.27 8.643 0 1.62-1.621 2.971-1.621 4.862z"
+          className="middleEast"
           id="lebanon"
           transform="translate(-126.949 1009.427)"
         />

@@ -48,15 +48,18 @@ export const InteractiveMapEurope = () => {
         case("GDP"): {
           return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.CD?date=${selectedYear}&format=json`)
         }
-        case("Population"): {
-          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/SP.POP.TOTL?date=${selectedYear}&format=json`)
-        }
         case("GDP Per Capita"): {
           return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.PCAP.CD?date=${selectedYear}&format=json`)
         }
         case("GDP Growth"): {
           return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.KD.ZG?date=${selectedYear}&format=json`)
-        }        
+        }       
+        case("Population"): {
+          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/SP.POP.TOTL?date=${selectedYear}&format=json`)
+        }
+        case("Population Density"): {
+          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/EN.POP.DNST?date=${selectedYear}&format=json`)
+        } 
         default: {
           setLoader(false)
           return null
@@ -66,7 +69,6 @@ export const InteractiveMapEurope = () => {
     setLoader(true)
     const response = await determineResponseType()
     if (!response) {return null}
-    if (dataToProcess.dataType === "GDP per capita") {return null}
     const data = await response.json()
     if(data) { 
       //fetch data of only relevant countries and set it to state:
@@ -78,6 +80,7 @@ export const InteractiveMapEurope = () => {
   }
 
   useEffect(() => {
+    if (dataToProcess.dataType === "None") {return setCountryData([])}
     fetchData(dataToProcess.selectedYear)
   }, [dataToProcess])
 
