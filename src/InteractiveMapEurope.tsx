@@ -3,11 +3,15 @@ import EuropeSVG from './EuropeSVG'
 import styled from 'styled-components'
 import { CountryData } from './types'
 import { DataTypeDropdown } from './DataTypeDropdown'
+import { StatesList } from './StatesList'
 
 //stlying:
-const MapContainer = styled.main`
+const MainContainer = styled.main`
+  display: flex;
+  flex-direction: row;
+`
+const MapContainer = styled.div`
   width: 50vw;
-  min-width: 280px;
   min-height: 250px;
   margin: 0px 0px 0px 4px;
   border: 3px solid black;
@@ -80,7 +84,7 @@ export const InteractiveMapEurope = () => {
   }
 
   useEffect(() => {
-    if (dataToProcess.dataType === "None") {return setCountryData([])}
+    if (dataToProcess.dataType === "None") {return setCountryData([])} //reset map if "None" is selected
     fetchData(dataToProcess.selectedYear)
   }, [dataToProcess])
 
@@ -93,9 +97,12 @@ export const InteractiveMapEurope = () => {
   return (
     <>
     <DataTypeDropdown loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
+    <MainContainer>
     <MapContainer>
       <EuropeSVG loader={loader} countriesData={countriesData} />
     </MapContainer>
+    <StatesList countriesData={countriesData} dataType={dataToProcess.dataType} year={dataToProcess.selectedYear} />
+    </MainContainer>
     </>
   )
 }
