@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { CountryData } from './types'
 
 interface Props {
@@ -30,23 +30,26 @@ export const StatesList = ({sortedCountryList, dataType, year}: Props) => {
     return {
       name: data.country.value,
       code: data.country.id,
-      value: data.value?.toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") //format numbers to make them more readable
-    }
+      value: data.value ? //format numbers to make them more readable (or return n/a if value is missing):
+        data.value.toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "n/a"
+    } 
   }).reverse() //reverse arr so that the values are listed from highest to lowest
   const getDataDescription = () => {
     switch(dataType){
-      case("Population"): {return `Population per state (${year})`}
-      case("Population Density"): {return `Population density (inhabitants per sq.km) per state (${year})`}
-      case("GDP"): {return `GDP per state, in USD (${year})`}
-      case("GDP Per Capita"): {return `GDP per capita per state, in USD (${year})`}
-      case("GDP Growth"): {return `Percentage of annual GDP growth per state (${year})`}
+      case("Population"): {return `Population per state`}
+      case("Population Density"): {return `Population density (inhabitants per sq.km)`}
+      case("GDP"): {return `GDP per state (in USD)`}
+      case("GDP Per Capita"): {return `GDP per capita per state (in USD)`}
+      case("GDP Growth"): {return `Percentage of annual GDP growth per state`}
       default: return null
     }
   }
   if (sortedCountryList.length < 1) {return null} //hide component if there is no data to display
   return (
-    <div style={{marginLeft: "70px", width: "40vw"}}>
-      <h3>{getDataDescription()}</h3>
+    <div style={{marginLeft: "70px", width: "40vw", textAlign: "center"}}>
+      <Typography variant="h5" component="h5" sx={{width: "40vw", marginBottom: "6px"}}>
+        {getDataDescription()}
+      </Typography>
       <TableContainer sx={{height: "40vh"}}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
