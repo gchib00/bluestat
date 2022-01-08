@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import EuropeSVG from './EuropeSVG'
 import styled from 'styled-components'
-import { CountryData } from './types'
-import { DataTypeDropdown } from './DataTypeDropdown'
+import { CountryData, DataToProcess } from './types'
+import { DataCustomization } from './DataCustomization'
 import { StatesList } from './StatesList'
+import { SecondaryDataCustomization } from './SecondaryDataCustomization'
 
 //stlying:
 const MainContainer = styled.main`
@@ -11,7 +12,7 @@ const MainContainer = styled.main`
   flex-direction: row;
 `
 const MapContainer = styled.div`
-  width: 50vw;
+  width: 48.6vw;
   min-height: 250px;
   margin: 0px 0px 0px 4px;
   border: 3px solid black;
@@ -19,34 +20,36 @@ const MapContainer = styled.div`
   justify-content: center;
   align-items: center;
 `
-//types:
-interface DataToProcess {
-  dataType: string;
-  visibleCountries: string;
-  selectedYear: string;
-}
 //relevant countries - for filtering worldbank data:
 const euStates=["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"]
 const eeaStates=["IS","NO","LI"]
 const otherRelevantStates=["GB","CH","RU","BY","UA","MD","BA","RS","ME","MK","AL","TR","GE","AM","AZ","AD","MC"]
+const microStatesList = ["LI","AD","MC"]
 
 export const InteractiveMapEurope = () => {
   const [countryData, setCountryData] = useState<CountryData[]>([])
-  const [countriesData, setCountriesData] = useState<CountryData[]>([])
+  const [sortedCountryList, setSortedCountryList] = useState<CountryData[]>([])
   const [loader, setLoader] = useState<boolean>(false) //loading animation switch
   const [dataToProcess, setDataToProcess] = useState<DataToProcess>({
-    dataType: "None", selectedYear: "2019", visibleCountries: "EU"
+    dataType: "None", selectedYear: "2019", visibleCountries: "EU", microStates: false
   })
 
-  const fetchData = async (selectedYear: string) => {
-    const determineRelevantStates = () => { //depending on user's choice, determine which countries should be included in the data
-      switch(dataToProcess.visibleCountries){
-        case("EU"): {return euStates}
-        case("EEA"): {return euStates.concat(eeaStates)}
-        default: {return euStates.concat(eeaStates, otherRelevantStates)}
-      }
+  const determineRelevantStates = () => { //depending on user's choice, determine which countries should be included in the data
+    let relevantStates = []
+    switch(dataToProcess.visibleCountries){
+      case("EU"): {relevantStates = euStates; break}
+      case("EEA"): {relevantStates = euStates.concat(eeaStates); break}
+      default: {relevantStates = euStates.concat(eeaStates, otherRelevantStates)}
     }
+    if (!dataToProcess.microStates) { //filter out micro states  
+      relevantStates = relevantStates.filter(state => (!microStatesList.includes(state)))
+    }
+    return relevantStates
+  }
+
+  const fetchData = async (selectedYear: string) => {
     const relevantStatesParam = determineRelevantStates().join(";") //create param to specify relevant countries for the api endpoint
+    
     const determineResponseType = async () => {
       switch(dataToProcess.dataType) {
         case("GDP"): {
@@ -86,23 +89,25 @@ export const InteractiveMapEurope = () => {
   useEffect(() => {
     if (dataToProcess.dataType === "None") {return setCountryData([])} //reset map if "None" is selected
     fetchData(dataToProcess.selectedYear)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataToProcess])
 
   useEffect(() => {
     //re-arrange the existing data from highest to lowerst by GDP/POP:
     const orderedArr = [...countryData].sort((a:CountryData, b:CountryData) => a.value-b.value)
-    setCountriesData(orderedArr)
+    setSortedCountryList(orderedArr)
   }, [countryData])
 
   return (
     <>
-    <DataTypeDropdown loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
+    <DataCustomization loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
     <MainContainer>
-    <MapContainer>
-      <EuropeSVG loader={loader} countriesData={countriesData} />
-    </MapContainer>
-    <StatesList countriesData={countriesData} dataType={dataToProcess.dataType} year={dataToProcess.selectedYear} />
+      <MapContainer>
+        <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} />
+      </MapContainer>
+      <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} year={dataToProcess.selectedYear} />
     </MainContainer>
+    <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
     </>
   )
 }

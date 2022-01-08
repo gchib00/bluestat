@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { CountryData } from './types'
 
 interface Props {
-  countriesData: CountryData[];
+  sortedCountryList: CountryData[];
   dataType: string;
   year: string;
 }
@@ -20,19 +20,19 @@ interface Row {
   value: string|number;
 }
 
-export const StatesList = ({countriesData, dataType, year}: Props) => {
+export const StatesList = ({sortedCountryList, dataType, year}: Props) => {
   const columns: Column[] = [
-    { id: 'name', label: 'State', minWidth: 100 },
+    { id: 'name', label: 'State', minWidth: 80 },
     { id: 'code', label: 'Code', minWidth: 30 },
     { id: 'value', label: 'Value', minWidth: 40 }
   ]
-  const rows: Row[] = countriesData.map(data => {
+  const rows: Row[] = sortedCountryList.map(data => {
     return {
       name: data.country.value,
       code: data.country.id,
-      value: data.value.toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      value: data.value?.toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") //format numbers to make them more readable
     }
-  }).reverse()
+  }).reverse() //reverse arr so that the values are listed from highest to lowest
   const getDataDescription = () => {
     switch(dataType){
       case("Population"): {return `Population per state (${year})`}
@@ -43,6 +43,7 @@ export const StatesList = ({countriesData, dataType, year}: Props) => {
       default: return null
     }
   }
+  if (sortedCountryList.length < 1) {return null} //hide component if there is no data to display
   return (
     <div style={{marginLeft: "70px", width: "40vw"}}>
       <h3>{getDataDescription()}</h3>
@@ -52,10 +53,16 @@ export const StatesList = ({countriesData, dataType, year}: Props) => {
             <TableRow>
               {columns.map((column) => (
                 <TableCell
-                  sx={{backgroundColor: "#292929", color: "white", fontWeight: "bold"}}
+                  sx={{
+                    backgroundColor: "#6e6969", 
+                    color: "white", 
+                    fontWeight: "bold",
+                    borderRight: "3px solid white",
+                    textAlign: "center"
+                  }}
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{width: column.minWidth}}
                 >
                   {column.label}
                 </TableCell>
@@ -63,21 +70,20 @@ export const StatesList = ({countriesData, dataType, year}: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = column.id as "name"|"code"|"value"
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {row[value]}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
+            {rows.map((row) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  {columns.map((column) => {
+                    const value = column.id as "name"|"code"|"value"
+                    return (
+                      <TableCell key={column.id} align={column.align} sx={{borderRight: "3px solid white", textAlign: "center"}}>
+                        {row[value]}
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

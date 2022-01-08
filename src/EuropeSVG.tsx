@@ -33,14 +33,14 @@ const Background = styled.path``
 //types:
 interface Props {
   loader: boolean;
-  countriesData: CountryData[];
+  sortedCountryList: CountryData[];
 }
-const SvgComponent = ({loader, countriesData}: Props) => {
+const SvgComponent = ({loader, sortedCountryList}: Props) => {
   const determineColor = (country: string) => { //formulate which color the country should get:
-    if (!countriesData || countriesData.length === 0) {return "#292929"}
+    if (!sortedCountryList || sortedCountryList.length === 0) {return "#292929"}
     //determine highest value:
-    const highestValue = countriesData[countriesData.length-1].value;
-    const countryData = countriesData.find(state => state.country.id === country)
+    const highestValue = sortedCountryList[sortedCountryList.length-1].value;
+    const countryData = sortedCountryList.find(state => state.country.id === country)
     if (!countryData) {return "#292929"}
     //assign color accordingly:
     switch(true) {

@@ -1,10 +1,11 @@
 import { Button, CircularProgress, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { DataToProcess } from './types'
 
 //styles:
 const Container = styled.div`
-  width: 50.2vw;
+  width: 48.8vw;
   height: 40px;
   display: flex;
   justify-content: space-between;
@@ -17,17 +18,12 @@ const FormContainer = styled.form`
   min-width: 480px;
   align-items: center;
 `
-interface DataToProcess {
-  dataType: string;
-  visibleCountries: string;
-  selectedYear: string;
-}
 interface Props {
   loader: boolean;
   dataToProcess: DataToProcess;
   setDataToProcess: React.Dispatch<React.SetStateAction<DataToProcess>>;
 }
-export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Props) => {
+export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Props) => {
   const [selectedYear, setSelectedYear] = useState<string>(dataToProcess.selectedYear)
   const [dataType, setDataType] = useState<string>(dataToProcess.dataType)
   const [visibleCountries, setVisibleCountries] = useState<string>(dataToProcess.visibleCountries)
@@ -36,7 +32,8 @@ export const DataTypeDropdown = ({loader, dataToProcess, setDataToProcess}: Prop
     setDataToProcess({
       dataType: dataType,
       visibleCountries: visibleCountries,
-      selectedYear: selectedYear
+      selectedYear: selectedYear,
+      microStates: dataToProcess.microStates
     })
   }
 
