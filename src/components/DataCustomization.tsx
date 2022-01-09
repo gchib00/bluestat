@@ -5,7 +5,7 @@ import { DataToProcess } from '../types'
 
 //styles:
 const Container = styled.div`
-  width: 48.8vw;
+  width: 48.6vw;
   height: 40px;
   display: flex;
   justify-content: space-between;

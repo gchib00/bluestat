@@ -46,7 +46,7 @@ export const StatesList = ({sortedCountryList, dataType, year}: Props) => {
   }
   if (sortedCountryList.length < 1) {return null} //hide component if there is no data to display
   return (
-    <div style={{marginLeft: "70px", width: "40vw", textAlign: "center"}}>
+    <div style={{width: "40vw", textAlign: "center"}}>
       <Typography variant="h5" component="h5" sx={{width: "40vw", marginBottom: "6px"}}>
         {getDataDescription()}
       </Typography>

@@ -5,11 +5,11 @@ import { Color, CountryData, DataToProcess } from '../types'
 import { DataCustomization } from './DataCustomization'
 import { StatesList } from './StatesList'
 import { SecondaryDataCustomization } from './SecondaryDataCustomization'
-import { ColorSelector } from './ColorSelector'
 
 //stlying:
 const MainContainer = styled.main`
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
 `
 const MapContainer = styled.div`
@@ -21,12 +21,6 @@ const MapContainer = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
-`
-const LowerContainer = styled.div`
-  width: 49vw;
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
 `
 //relevant countries - for filtering worldbank data:
 const euStates=["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"]
@@ -108,7 +102,7 @@ export const InteractiveMapEurope = () => {
   }, [countryData])
 
   return (
-    <>
+    <main style={{marginLeft: 20, marginRight: 40}}>
     <DataCustomization loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
     <MainContainer>
       <MapContainer>
@@ -116,10 +110,7 @@ export const InteractiveMapEurope = () => {
       </MapContainer>
       <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} year={dataToProcess.selectedYear} />
     </MainContainer>
-    <LowerContainer>
-      <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
-      <ColorSelector setMapColor={setMapColor} />
-    </LowerContainer>
-    </>
+    <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} setMapColor={setMapColor}/>
+    </main>
   )
 }
