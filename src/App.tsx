@@ -1,5 +1,5 @@
 import React from 'react';
-import { InteractiveMapEurope } from './InteractiveMapEurope';
+import { InteractiveMapEurope } from './components/InteractiveMapEurope';
 
 function App() {
   return (

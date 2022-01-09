@@ -1,6 +1,7 @@
 import * as React from "react"
 import styled from "styled-components"
-import { CountryData } from "./types"
+import { Color, CountryData } from "../../types"
+import { determineColor } from "./determineColor"
 
 //styling
 const EUState = styled.path`
@@ -34,38 +35,40 @@ const Background = styled.path``
 interface Props {
   loader: boolean;
   sortedCountryList: CountryData[];
+  mapColor: Color;
 }
-const SvgComponent = ({loader, sortedCountryList}: Props) => {
-  const determineColor = (country: string) => { //formulate which color the country should get:
-    if (!sortedCountryList || sortedCountryList.length === 0) {return "#292929"}
-    //determine highest value:
-    const highestValue = sortedCountryList[sortedCountryList.length-1].value;
-    const countryData = sortedCountryList.find(state => state.country.id === country)
-    if (!countryData) {return "#292929"}
-    //assign color accordingly:
-    switch(true) {
-      case(countryData.value < highestValue*5/100): {return "#95dbf9"}
-      case(countryData.value < highestValue*10/100): {return "#82d5f8"}
-      case(countryData.value < highestValue*15/100): {return "#6fcef6"}
-      case(countryData.value < highestValue*20/100): {return "#5bc8f5"}
-      case(countryData.value < highestValue*25/100): {return "#48c1f4"}
-      case(countryData.value < highestValue*30/100): {return "#35bbf3"}
-      case(countryData.value < highestValue*35/100): {return "#21b4f2"}
-      case(countryData.value < highestValue*40/100): {return "#0eaef1"}
-      case(countryData.value < highestValue*45/100): {return "#0da0de"}
-      case(countryData.value < highestValue*50/100): {return "#0c92ca"}
-      case(countryData.value < highestValue*55/100): {return "#0b84b7"}
-      case(countryData.value < highestValue*60/100): {return "#0a76a4"}
-      case(countryData.value < highestValue*65/100): {return "#096890"}
-      case(countryData.value < highestValue*70/100): {return "#075a7d"}
-      case(countryData.value < highestValue*75/100): {return "#064c6a"}
-      case(countryData.value < highestValue*80/100): {return "#053e57"}
-      case(countryData.value < highestValue*85/100): {return "#043143"} 
-      case(countryData.value < highestValue*90/100): {return "#042735"}
-      case(countryData.value < highestValue*95/100): {return "#041f2a"}
-      case(countryData.value === highestValue): {return "#02151d"}
-    }
-  }
+const SvgComponent = ({loader, sortedCountryList, mapColor}: Props) => {
+
+  // const determineColor = (country: string) => { //formulate which color the country should get:
+  //   if (!sortedCountryList || sortedCountryList.length === 0) {return "#292929"}
+  //   //determine highest value:
+  //   const highestValue = sortedCountryList[sortedCountryList.length-1].value;
+  //   const countryData = sortedCountryList.find(state => state.country.id === country)
+  //   if (!countryData) {return "#292929"}
+  //   //assign color accordingly:
+  //   switch(true) {
+  //     case(countryData.value < highestValue*5/100): {return "#bbeaff"}
+  //     case(countryData.value < highestValue*10/100): {return "#82d5f8"}
+  //     case(countryData.value < highestValue*15/100): {return "#6fcef6"}
+  //     case(countryData.value < highestValue*20/100): {return "#5bc8f5"}
+  //     case(countryData.value < highestValue*25/100): {return "#48c1f4"}
+  //     case(countryData.value < highestValue*30/100): {return "#35bbf3"}
+  //     case(countryData.value < highestValue*35/100): {return "#21b4f2"}
+  //     case(countryData.value < highestValue*40/100): {return "#0eaef1"}
+  //     case(countryData.value < highestValue*45/100): {return "#0da0de"}
+  //     case(countryData.value < highestValue*50/100): {return "#0c92ca"}
+  //     case(countryData.value < highestValue*55/100): {return "#0b84b7"}
+  //     case(countryData.value < highestValue*60/100): {return "#0a76a4"}
+  //     case(countryData.value < highestValue*65/100): {return "#096890"}
+  //     case(countryData.value < highestValue*70/100): {return "#075a7d"}
+  //     case(countryData.value < highestValue*75/100): {return "#064c6a"}
+  //     case(countryData.value < highestValue*80/100): {return "#053e57"}
+  //     case(countryData.value < highestValue*85/100): {return "#043143"} 
+  //     case(countryData.value < highestValue*90/100): {return "#042735"}
+  //     case(countryData.value < highestValue*95/100): {return "#041f2a"}
+  //     case(countryData.value === highestValue): {return "#02151d"}
+  //   }
+  // }
 
   //turns on dimmer when the map data is loading:
   const mapDimmer = () => {
@@ -131,7 +134,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         /> */}
         <State
           style={{
-            fill: determineColor("IS"),
+            fill: determineColor({country:"IS", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -144,7 +147,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("PT"),
+            fill: determineColor({country:"PT", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -169,7 +172,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("ES"),
+            fill: determineColor({country:"ES", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -206,7 +209,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("BE"),
+            fill: determineColor({country:"BE", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -219,7 +222,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("IT"),
+            fill: determineColor({country:"IT", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.5062716,
@@ -234,7 +237,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("BY"),
+            fill: determineColor({country:"BY", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -247,7 +250,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("PL"),
+            fill: determineColor({country:"PL", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -272,7 +275,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("GR"),
+            fill: determineColor({country:"GR", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -308,7 +311,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("FI"),
+            fill: determineColor({country:"FI", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -321,7 +324,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("DE"),
+            fill: determineColor({country:"DE", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -334,7 +337,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />      
         <EUState
           style={{
-            fill: determineColor("SE"),
+            fill: determineColor({country:"SE", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -347,7 +350,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("UA"),
+            fill: determineColor({country:"UA", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -384,7 +387,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("AZ"),
+            fill: determineColor({country:"AZ", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -421,7 +424,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("GE"),
+            fill: determineColor({country:"GE", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -434,7 +437,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("AM"),
+            fill: determineColor({country:"AM", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -447,7 +450,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("CY"),
+            fill: determineColor({country:"CY", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -460,7 +463,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("IE"),
+            fill: determineColor({country:"IE", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -473,7 +476,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("GB"),
+            fill: determineColor({country:"GB", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -486,7 +489,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("CH"),
+            fill: determineColor({country:"CH", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -499,7 +502,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("AT"),
+            fill: determineColor({country:"AT", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -512,7 +515,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("CZ"),
+            fill: determineColor({country:"CZ", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -525,7 +528,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("SK"),
+            fill: determineColor({country:"SK", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -538,7 +541,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("HU"),
+            fill: determineColor({country:"HU", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -551,7 +554,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("LT"),
+            fill: determineColor({country:"LT", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -564,7 +567,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("LV"),
+            fill: determineColor({country:"LV", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -577,7 +580,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("MD"),
+            fill: determineColor({country:"MD", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -590,7 +593,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("RO"),
+            fill: determineColor({country:"RO", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -603,7 +606,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("BG"),
+            fill: determineColor({country:"BG", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -616,7 +619,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("AL"),
+            fill: determineColor({country:"AL", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -629,7 +632,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("EE"),
+            fill: determineColor({country:"EE", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -654,7 +657,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <MicroState
           style={{
-            fill: determineColor("AD"),
+            fill: determineColor({country:"AD", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -667,7 +670,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <MicroState
           style={{
-            fill: determineColor("MC"),
+            fill: determineColor({country:"MC", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -680,7 +683,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("LU"),
+            fill: determineColor({country:"LU", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -693,7 +696,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("FR"),
+            fill: determineColor({country:"FR", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -717,7 +720,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         /> */}
         <EUState
           style={{
-            fill: determineColor("NL"),
+            fill: determineColor({country:"NL", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -730,7 +733,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("BA"),
+            fill: determineColor({country:"BA", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -743,7 +746,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("SI"),
+            fill: determineColor({country:"SI", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -756,7 +759,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("MK"),
+            fill: determineColor({country:"MK", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -769,7 +772,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("HR"),
+            fill: determineColor({country:"HR", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -782,7 +785,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <EUState
           style={{
-            fill: determineColor("DK"),
+            fill: determineColor({country:"DK", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -806,7 +809,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         >
           <State
             style={{
-              fill: determineColor("RU"),
+              fill: determineColor({country:"RU", mapColor: mapColor, sortedCountryList: sortedCountryList}),
               fillOpacity: 1,
               stroke: "#000",
               strokeWidth: 5.57518196,
@@ -821,7 +824,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
           />
           <State
             style={{
-              fill: determineColor("RU"),
+              fill: determineColor({country:"RU", mapColor: mapColor, sortedCountryList: sortedCountryList}),
               fillOpacity: 1,
               stroke: "#000",
               strokeWidth: 5.57518196,
@@ -837,7 +840,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         </g>
         <EUState
           style={{
-            fill: determineColor("MT"),
+            fill: determineColor({country:"MT", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -850,7 +853,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("ME"),
+            fill: determineColor({country:"ME", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50764692,
@@ -863,7 +866,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         />
         <State
           style={{
-            fill: determineColor("RS"),
+            fill: determineColor({country:"RS", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50764692,
@@ -877,7 +880,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         <State
           d="M1493.955 192.58h-.54c-1.622.27-3.244 0-4.865.541-2.162.81-3.784 2.701-5.676 4.052-.54.27 0 1.35-.27 1.08-6.216-1.35-8.107-6.212-14.323-2.971l-4.594 5.132c-1.892.81-4.324-.54-5.676.81-1.621 1.35 0 4.051-1.08 5.672-1.622 1.89-7.027 1.08-4.595 5.132 5.946 1.35 14.053 7.022 10 11.884-2.973 3.241-5.946 1.62-7.027 7.023l2.162 7.833c-.27 1.89-4.054 8.103-5.946 9.183l-.27 2.971c.54.54 1.622.81 2.973 1.35 4.054 1.351 19.998-9.723 18.917-4.321-.54 3.781-13.782 9.183-14.323 13.505 0 .81 1.622 1.08 1.892 1.89.27.81.27 1.621 0 2.432-.27 1.62-2.162 6.212-.81 5.131 5.134-4.321 6.215-11.344 10.539-17.016 3.783-5.402 10.81-6.482 14.323-12.424 1.081-1.891 2.162-4.052 2.973-6.213.27-1.62-.81-3.51.27-4.861 4.594-5.943 6.486-.54 11.891-2.431.81-.27.27-1.89 1.081-2.701 1.622-1.35 3.243-2.431 5.405-2.971 6.216-2.161 9.189 4.591 7.837-2.161-.54-1.35 1.081 3.781 2.433 3.511 2.162-.27 8.918-1.62 9.729-3.781.81-1.62-.27-3.512.27-5.402 0-1.08 2.162-2.971.81-3.511-5.675-1.891-18.647.27-25.673-4.052-10.54-6.482-6.216-9.994-7.837-14.315zM1916.626 221.751c.54-.54 1.351-1.35 1.892-2.16 1.08-1.08 2.162-1.62 2.702-2.971.54-1.35.27-8.373 1.892-8.644 1.892-.54 3.784.81 5.405 0 1.621-.81 2.162-3.78 4.054-4.591 4.053-2.161 17.566.54 21.35-4.322 4.053-5.132-2.163-4.051 4.053-5.942 8.108-2.43 3.514 5.942 8.108 9.183 1.891 1.08 4.053-9.453 6.756-11.614 1.351-.81 5.405-.27 4.594-1.62-5.945-9.184-1.351-.81-8.918-5.943-4.054-2.7-3.243-8.643-3.513-9.453-.54-.81-8.378-1.89-9.189-1.89-1.08 0-3.243 2.43-3.513 1.08-.81-3.512.27-8.914.54-12.695 0-1.35.54-2.971.27-4.322-2.431-6.482-4.053 2.971-6.485-1.35 0-.54-6.486-13.775-6.486-13.775-3.243-1.35-1.351 4.592-4.865-2.971-.54-1.35 0-3.511-.54-4.862-1.351-2.701-6.486-2.971-8.108-5.942-1.621-2.701 8.108-1.89 8.648-6.482.54-7.023-10.27-15.936 5.946-11.885l.54-.54c-3.243-1.62-7.945-3.572-10.357-4.44-10.672-3.845-13.506 4.17-24.775 4.402-.811 0 1.351-1.853.81-2.393-1.08-1.89-3.513-2.43-5.134-4.051-2.973-3.242-.54-9.454-1.352-13.235-1.621-7.023-9.999-6.483-12.16-8.373-.812-.81-.541-2.431-1.352-3.241-.81-.81-1.892-1.08-2.703-.81-1.35.54-2.162 2.16-3.513 2.43-.81 0-.81-1.62-1.621-1.89-.811 0-1.622 1.89-1.892 1.08-.54-.81 1.08-1.62 1.08-2.701.271-1.89-3.783-.81-5.674-1.35-1.622-.27-2.973-1.351-4.594-1.351-.541 0 0 1.35-.27 1.62-4.595 1.08-.812-2.7-2.163-3.78-.81-.541-1.621.81-2.432 1.35-1.081.54-2.973.54-3.513 1.62-.811 1.62.81 3.782 0 5.402-.811 1.08-2.433.81-3.514 1.08-3.513 1.08-7.837.81-10.81 3.242-1.08.81-.27 2.97-1.621 4.051-1.081.81-2.702.27-4.054.27-1.351 0-2.702.27-4.324.27h-.54c-1.622 6.483-3.514 11.615-9.189 17.017-.81.81-2.162.54-2.702 1.35-3.514 4.052-7.567 14.585-12.972 17.016-1.352.54-3.243-1.08-4.595-.81-1.08.27-1.351 2.16-2.432 2.43-1.081.271-2.162-.54-3.243-.54-1.081.27-1.892 1.621-3.243 1.351-.27 0-5.405-2.7-7.026-1.35-1.352 1.08-1.352 2.97-2.433 3.781-1.08.54-2.432-.54-3.513 0-1.08.81-1.08 2.16-2.162 2.971-1.621 1.35-4.054 1.62-5.675 2.971-2.703 2.431-2.973 4.322-5.946 6.483-3.513 2.7-12.161 4.051-16.215 4.051-9.729 0 1.081-1.08-4.594-3.241-3.243-1.08-4.054 4.862-5.135 5.402-1.891.81-4.324-.27-6.486-.54-.27-.27-.27-1.08-.81-1.08-2.163.27-4.054 2.16-6.486 1.89-.811 0-.541-2.16-1.352-2.701-1.351-.81-3.243-1.62-5.134-1.62-10.54.27-5.406 10.803-15.945 6.212-3.243-1.621-4.865-9.994-8.378-9.454-1.351 0-1.351 3.241-2.703 2.701-1.08-.27 1.082-3.511-.27-3.511-2.702.27-7.026 10.264-16.485 6.752-10-3.781-4.324-8.913-4.864-9.453-1.352-1.62-3.784-.54-5.676-.54-.81 0-1.621-.54-1.891 0-.811 1.35-.27 3.511-1.352 4.862-2.973 5.401-31.079 9.183-38.105 12.154-3.243 1.08-5.946 5.402-8.378 7.563-2.162 2.16-5.945 2.97-8.378 4.591-6.756 5.402-11.35 13.775-17.566 20.528-1.621 1.89-4.324 4.862-6.216 6.212-.27.27-1.621 0-1.621.54-1.081 5.402 2.973 5.402-2.162 9.184-.54.54-1.892 0-2.703.27-6.486 2.43-1.35 3.241-9.729 3.511-2.972 0-10.54-2.16-13.242-1.08-.81.27-.54 1.62-1.351 2.16-2.973 2.701-8.378 3.782-12.161 4.052-4.595.54-15.134.81-15.405 1.35-2.794 6.557-3.214 10.464 4.595 11.615.54 0 1.35 0 1.621.54.27.81-1.08 1.89-.54 2.16.81.27 1.35-1.35 2.162-1.35.54.27.27 1.62.81 1.62 5.135.54 9.73-4.591 15.134-4.05 4.595.27-8.107 5.401-9.188 5.671-.81 0-.81-1.89-1.351-1.62-.54.27-16.215 10.264-17.296 11.344-3.784 5.132 13.782-2.971 8.648 4.592-1.081 1.35-11.891 2.16-15.675 2.7-7.297 1.08-13.512 5.673-13.783 5.403-1.08-1.351 2.703-4.052 1.352-5.132-1.622-1.35-4.324 0-6.486.27-.27.27 0 .81-.27.81-.541 0-1.352-1.35-1.082-.81.811 1.35 3.514 2.16 3.243 4.051-.81 2.701-4.053 4.322-6.756 5.132-5.675 2.16-7.026-3.781-8.378-4.051-3.513-.54-5.134 4.321-7.837 4.861-7.03-.436-7.385 3.919-10.54 8.644-.81.81-2.162.27-2.702 1.08-.54 1.08.27 2.16.27 2.971-.27 1.35-.27 2.971-1.08 4.052-1.622 1.62-4.595.27-4.595 3.24.27 4.322 2.432 6.483 2.432 9.724.27 1.08-3.243 7.293.81 7.833.541 0 17.297-8.103 19.189-8.643.54-.27 1.621-.81 1.35-.27-.81 2.97-3.242 8.643-5.134 11.344-.27.54-2.702-.27-1.08.81 1.62 1.35 7.836 1.35 8.647 5.402 0 1.35-2.702 3.241-1.621 4.592.81.54 9.188-2.43 7.837 1.08-1.351 4.052-9.459 7.293-7.837 9.724 1.621 2.43 6.215 6.212 6.756 5.672 1.08-.81 2.432-1.35 3.513-1.62s3.513-1.081 3.513 0c-.27.54-8.377 5.671-9.458 5.671-1.352.27-2.162-2.97-3.243-2.16-1.352 1.08 1.891 5.131.54 4.591-.54 0-5.135-10.263-6.756-11.074-.81-.54-2.703-.81-3.243.27-.81 1.621.54 3.782.81 5.672 0 .81-.81 1.621-.27 1.891 1.352.54 4.324-.81 4.054.27-.54 2.161-2.973 3.241-4.864 4.322-.54 0-1.081-1.62-1.352-1.08-.27.54 1.081 1.08.811 1.62 0 .81-2.162 1.62-1.351 2.16 1.621 1.081 3.783 0 5.675.54.54 0 4.865 3.512 5.405 2.972 1.622-1.35 1.892-4.051 3.784-5.132 2.162-1.08 1.891 4.862 4.053 5.672 1.081.27 1.892-1.89 2.973-1.89 1.351 0 8.648 2.16 8.648 2.16.27.54 1.892 7.023.81 8.373-1.62 1.621-8.107 2.971-5.945 3.782 2.162.54 4.595-.27 6.486.81 2.162 1.62-1.621 7.833 1.081 8.103 2.433.27 3.514-3.781 5.676-3.781 2.162.27 2.972 3.24 4.864 4.321.54.27 1.622-1.08 1.622-.54 4.053 13.235-19.188-.54-8.919 10.804 1.352 1.35 3.514-1.35 5.135-1.35 2.703 0 1.622 2.97 4.594 1.35.54-.27-.54-1.08-.27-1.08 1.892-1.08 4.054 0 5.946-.81 2.162-1.081 7.296-3.512 8.648-4.052 2.162-.81 5.134-3.511 6.486-1.62 5.134 6.482-7.838 4.05-7.838 6.211 0 1.621 2.703 3.242 1.622 4.322-1.622 1.62-4.324 0-6.486.54-4.324 1.08-8.108 4.592-11.62 7.023-1.352 1.08 3.512-.54 5.134-.81 1.351 0 2.702 1.08 3.513.54 1.081-.81-.27-2.971.81-3.782 1.622-1.08 3.784-.54 5.676-.81 5.675-1.62 4.865-4.322 5.135-3.781 3.513 7.832-.27 5.402-2.703 7.832-.54.54 1.622 1.351 2.162.81.54-.81 8.378-9.723 8.378-9.993.81-1.35 0-3.511 1.081-4.051 7.027-3.242 3.784 3.781 5.675 5.402 1.622 1.08 4.324.54 6.216 1.35.54 0 .54 1.35.81 1.08 2.703-2.43-2.431-5.942 1.352-6.482 7.567-1.35 7.027 10.804 7.567 11.344 5.675 4.052 10 1.891 15.945 2.431.81 0 1.08 2.431 2.432 2.161 2.432-.27 11.35-8.913 11.891-9.183 1.351-1.62 5.405-2.161 7.027-1.35.54.27 0 2.7.54 2.16 1.351-1.35 2.162-3.511 2.162-5.402 0-1.08-1.892-1.08-1.892-1.89-.27-1.621 1.082-3.242 1.622-4.863 1.081-3.24-4.324-7.562-1.351-11.614 1.08-1.35 14.053-3.781 16.215-4.051.81 0 24.322 2.43 24.863 2.7 10.54 2.972 8.648 10.805 22.7 11.885 7.027.54 1.082-1.35 6.757-4.592 1.351-.81 3.243.54 4.594-.27.81-.54 0-2.16.54-2.7 1.892-1.351 10.27-2.432 11.351-2.972 1.081-.81 1.351-2.7 2.433-3.511.81-.27.81 1.62 1.621 1.35.27 0 2.973-8.103 3.513-7.832 1.351 0 1.892 2.97 3.243 2.43 5.405-1.62 1.081-4.861 1.351-7.292.811-5.132 6.757-12.695 9.46-16.746 5.404-7.293 21.349 1.89 23.24.54 1.622-1.35 2.163-3.511 3.784-4.592.54-.54 8.108 1.08 4.324-4.862-.54-.81-2.432 3.782-2.162 2.702.54-1.351 3.243-2.161 2.433-3.242-.541-1.08-2.163 1.62-3.514 1.35-.81-.27.811-1.35 1.622-1.89 1.08-1.08 2.973-1.62 4.053-2.7 1.622-2.162 1.082-6.483 3.784-7.023 3.784-1.08 7.567 4.591 8.378 7.562.27 1.35-8.918 13.505-8.108 15.396 1.622 3.511 8.108 4.321 8.648 8.643.27.81-.27 1.89-1.08 2.971 1.89-.81 7.026 2.701 8.107 1.35 1.351-1.35-.811-3.78-.27-5.671.54-1.351 2.972-1.621 3.513-2.972l-1.622-7.022c0-.54 7.838-3.241 8.378-3.781.54-.81-4.324-3.782-4.865-4.322-2.162-2.701-4.323-12.425-2.702-15.396.54-.81 10.54-1.08 11.62 0 .271.27-1.35 4.862 1.892 2.971.811-.54.27-1.89.811-2.16 2.703-1.62 6.216-.81 8.918-2.431 7.567-3.782 11.891-18.097 21.89-18.907 3.784-.27 7.568 2.97 11.622 2.97 7.837 0 16.755-6.751 23.241-10.803 10.54-6.752 15.404-19.177 25.404-26.47 6.216-4.321 15.134-5.131 21.62-9.453 2.972-1.89 8.648-5.132 10.54-8.643 1.08-1.891 1.891-9.184 6.756-4.322 1.08.81 1.891 2.161 2.432 3.511z"
           style={{
-            fill: determineColor("TR"),
+            fill: determineColor({country:"TR", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,
@@ -902,7 +905,7 @@ const SvgComponent = ({loader, sortedCountryList}: Props) => {
         /> */}
         <State
           style={{
-            fill: determineColor("NO"),
+            fill: determineColor({country:"NO", mapColor: mapColor, sortedCountryList: sortedCountryList}),
             fillOpacity: 1,
             stroke: "#000",
             strokeWidth: 1.50812638,

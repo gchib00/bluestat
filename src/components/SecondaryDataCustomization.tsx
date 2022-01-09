@@ -1,6 +1,6 @@
 import React from 'react'
 import { Checkbox, FormControlLabel } from '@mui/material'
-import { DataToProcess } from './types'
+import { DataToProcess } from '../types'
 
 interface Props {
   dataToProcess: DataToProcess;
@@ -15,7 +15,6 @@ export const SecondaryDataCustomization = ({dataToProcess, setDataToProcess}: Pr
 
   return (
     <FormControlLabel
-      sx={{margin: 0.8}}
       control={<Checkbox checked={!showMicroStates} onChange={handleCheckboxClick} />}
       label="Disable microstates:"
       color="default"

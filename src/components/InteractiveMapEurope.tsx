@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import EuropeSVG from './EuropeSVG'
+import EuropeSVG from './MapSVG/EuropeSVG'
 import styled from 'styled-components'
-import { CountryData, DataToProcess } from './types'
+import { Color, CountryData, DataToProcess } from '../types'
 import { DataCustomization } from './DataCustomization'
 import { StatesList } from './StatesList'
 import { SecondaryDataCustomization } from './SecondaryDataCustomization'
+import { ColorSelector } from './ColorSelector'
 
 //stlying:
 const MainContainer = styled.main`
@@ -15,10 +16,17 @@ const MapContainer = styled.div`
   width: 48.6vw;
   min-height: 250px;
   margin: 0px 0px 0px 4px;
+  border-radius: 4px;
   border: 3px solid black;
   display:flex;
   justify-content: center;
   align-items: center;
+`
+const LowerContainer = styled.div`
+  width: 49vw;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
 `
 //relevant countries - for filtering worldbank data:
 const euStates=["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"]
@@ -27,6 +35,7 @@ const otherRelevantStates=["GB","CH","RU","BY","UA","MD","BA","RS","ME","MK","AL
 const microStatesList = ["LI","AD","MC"]
 
 export const InteractiveMapEurope = () => {
+  const [mapColor, setMapColor] = useState<Color>("blue")
   const [countryData, setCountryData] = useState<CountryData[]>([])
   const [sortedCountryList, setSortedCountryList] = useState<CountryData[]>([])
   const [loader, setLoader] = useState<boolean>(false) //loading animation switch
@@ -103,11 +112,14 @@ export const InteractiveMapEurope = () => {
     <DataCustomization loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
     <MainContainer>
       <MapContainer>
-        <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} />
+        <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} mapColor={mapColor} />
       </MapContainer>
       <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} year={dataToProcess.selectedYear} />
     </MainContainer>
-    <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
+    <LowerContainer>
+      <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
+      <ColorSelector setMapColor={setMapColor} />
+    </LowerContainer>
     </>
   )
 }

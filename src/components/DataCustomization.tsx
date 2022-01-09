@@ -1,7 +1,7 @@
 import { Button, CircularProgress, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { DataToProcess } from './types'
+import { DataToProcess } from '../types'
 
 //styles:
 const Container = styled.div`

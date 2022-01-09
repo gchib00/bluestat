@@ -1,3 +1,4 @@
+export type Color = "blue" | "green" | "red"
 export interface Country {
   id: string;
   value: string;

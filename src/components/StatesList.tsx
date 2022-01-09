@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { CountryData } from './types'
+import { CountryData } from '../types'
 
 interface Props {
   sortedCountryList: CountryData[];
