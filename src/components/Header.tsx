@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import LogoImage from '../static/logo.png'
+import React from "react"
+import styled from "styled-components"
+import LogoImage from "../static/logo.png"
 
 const MainContainer = styled.header`
   background-color: white;

@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import PaletteSVG from '../static/palette.svg'
-import BlueSVG from '../static/blue-circle.svg'
-import RedSVG from '../static/red-circle.svg'
-import GreenSVG from '../static/green-circle.svg'
-import { Color } from '../types'
+import React, { useState } from "react"
+import styled from "styled-components"
+import PaletteSVG from "../static/palette.svg"
+import BlueSVG from "../static/blue-circle.svg"
+import RedSVG from "../static/red-circle.svg"
+import GreenSVG from "../static/green-circle.svg"
+import { Color } from "../types"
 
 //styling:
 const MainContainer = styled.div`

@@ -1,8 +1,8 @@
-import React from 'react'
-import { Checkbox, FormControlLabel } from '@mui/material'
-import { Color, DataToProcess } from '../types'
-import styled from 'styled-components'
-import { ColorSelector } from './ColorSelector'
+import React from "react"
+import { Checkbox, FormControlLabel } from "@mui/material"
+import { Color, DataToProcess } from "../types"
+import styled from "styled-components"
+import { ColorSelector } from "./ColorSelector"
 
 const LowerContainer = styled.div`
   width: 48.7vw;

@@ -1,17 +1,16 @@
-import React from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { CountryData } from '../types'
+import React from "react"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { CountryData } from "../types"
 
 interface Props {
   sortedCountryList: CountryData[];
   dataType: string;
-  year: string;
 }
 interface Column {
   id: string;
   label: string;
   minWidth?: number;
-  align?: 'right';
+  align?: "right";
   format?: (value: number) => string;
 }
 interface Row {
@@ -20,11 +19,11 @@ interface Row {
   value: string|number;
 }
 
-export const StatesList = ({sortedCountryList, dataType, year}: Props) => {
+export const StatesList = ({sortedCountryList, dataType}: Props) => {
   const columns: Column[] = [
-    { id: 'name', label: 'State', minWidth: 80 },
-    { id: 'code', label: 'Code', minWidth: 30 },
-    { id: 'value', label: 'Value', minWidth: 40 }
+    { id: "name", label: "State", minWidth: 80 },
+    { id: "code", label: "Code", minWidth: 30 },
+    { id: "value", label: "Value", minWidth: 40 }
   ]
   const rows: Row[] = sortedCountryList.map(data => {
     return {
@@ -36,12 +35,12 @@ export const StatesList = ({sortedCountryList, dataType, year}: Props) => {
   }).reverse() //reverse arr so that the values are listed from highest to lowest
   const getDataDescription = () => {
     switch(dataType){
-      case("Population"): {return `Population per state`}
-      case("Population Density"): {return `Population density (inhabitants per sq.km)`}
-      case("GDP"): {return `GDP per state (in USD)`}
-      case("GDP Per Capita"): {return `GDP per capita per state (in USD)`}
-      case("GDP Growth"): {return `Percentage of annual GDP growth per state`}
-      default: return null
+    case("Population"): {return "Population per state"}
+    case("Population Density"): {return "Population density (inhabitants per sq.km)"}
+    case("GDP"): {return "GDP per state (in USD)"}
+    case("GDP Per Capita"): {return "GDP per capita per state (in USD)"}
+    case("GDP Growth"): {return "Percentage of annual GDP growth per state"}
+    default: return null
     }
   }
   if (sortedCountryList.length < 1) {return null} //hide component if there is no data to display

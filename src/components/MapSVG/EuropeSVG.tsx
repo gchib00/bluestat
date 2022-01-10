@@ -1,3 +1,4 @@
+import React from "react"
 import styled from "styled-components"
 import { Color, CountryData } from "../../types"
 import { determineColor } from "./determineColor"
@@ -37,40 +38,7 @@ interface Props {
   mapColor: Color;
 }
 const SvgComponent = ({loader, sortedCountryList, mapColor}: Props) => {
-
-  // const determineColor = (country: string) => { //formulate which color the country should get:
-  //   if (!sortedCountryList || sortedCountryList.length === 0) {return "#292929"}
-  //   //determine highest value:
-  //   const highestValue = sortedCountryList[sortedCountryList.length-1].value;
-  //   const countryData = sortedCountryList.find(state => state.country.id === country)
-  //   if (!countryData) {return "#292929"}
-  //   //assign color accordingly:
-  //   switch(true) {
-  //     case(countryData.value < highestValue*5/100): {return "#bbeaff"}
-  //     case(countryData.value < highestValue*10/100): {return "#82d5f8"}
-  //     case(countryData.value < highestValue*15/100): {return "#6fcef6"}
-  //     case(countryData.value < highestValue*20/100): {return "#5bc8f5"}
-  //     case(countryData.value < highestValue*25/100): {return "#48c1f4"}
-  //     case(countryData.value < highestValue*30/100): {return "#35bbf3"}
-  //     case(countryData.value < highestValue*35/100): {return "#21b4f2"}
-  //     case(countryData.value < highestValue*40/100): {return "#0eaef1"}
-  //     case(countryData.value < highestValue*45/100): {return "#0da0de"}
-  //     case(countryData.value < highestValue*50/100): {return "#0c92ca"}
-  //     case(countryData.value < highestValue*55/100): {return "#0b84b7"}
-  //     case(countryData.value < highestValue*60/100): {return "#0a76a4"}
-  //     case(countryData.value < highestValue*65/100): {return "#096890"}
-  //     case(countryData.value < highestValue*70/100): {return "#075a7d"}
-  //     case(countryData.value < highestValue*75/100): {return "#064c6a"}
-  //     case(countryData.value < highestValue*80/100): {return "#053e57"}
-  //     case(countryData.value < highestValue*85/100): {return "#043143"} 
-  //     case(countryData.value < highestValue*90/100): {return "#042735"}
-  //     case(countryData.value < highestValue*95/100): {return "#041f2a"}
-  //     case(countryData.value === highestValue): {return "#02151d"}
-  //   }
-  // }
-
-  //turns on dimmer when the map data is loading:
-  const mapDimmer = () => {
+  const mapDimmer = () => { //turn on dimmer when the map data is loading
     if (!loader) {return "brightness(1)"}
     return "brightness(0.45)"
   }

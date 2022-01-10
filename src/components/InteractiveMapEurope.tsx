@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import EuropeSVG from './MapSVG/EuropeSVG'
-import styled from 'styled-components'
-import { Color, CountryData, DataToProcess } from '../types'
-import { DataCustomization } from './DataCustomization'
-import { StatesList } from './StatesList'
-import { SecondaryDataCustomization } from './SecondaryDataCustomization'
+import React, { useEffect, useState } from "react"
+import EuropeSVG from "./MapSVG/EuropeSVG"
+import styled from "styled-components"
+import { Color, CountryData, DataToProcess } from "../types"
+import { DataCustomization } from "./DataCustomization"
+import { StatesList } from "./StatesList"
+import { SecondaryDataCustomization } from "./SecondaryDataCustomization"
 
 //stlying:
 const MainContainer = styled.main`
@@ -37,12 +37,12 @@ export const InteractiveMapEurope = () => {
     dataType: "None", selectedYear: "2019", visibleCountries: "EU", microStates: false
   })
 
-  const determineRelevantStates = () => { //depending on user's choice, determine which countries should be included in the data
+  const determineRelevantStates = () => { //depending on user"s choice, determine which countries should be included in the data
     let relevantStates = []
     switch(dataToProcess.visibleCountries){
-      case("EU"): {relevantStates = euStates; break}
-      case("EEA"): {relevantStates = euStates.concat(eeaStates); break}
-      default: {relevantStates = euStates.concat(eeaStates, otherRelevantStates)}
+    case("EU"): {relevantStates = euStates; break}
+    case("EEA"): {relevantStates = euStates.concat(eeaStates); break}
+    default: {relevantStates = euStates.concat(eeaStates, otherRelevantStates)}
     }
     if (!dataToProcess.microStates) { //filter out micro states  
       relevantStates = relevantStates.filter(state => (!microStatesList.includes(state)))
@@ -55,26 +55,25 @@ export const InteractiveMapEurope = () => {
     
     const determineResponseType = async () => {
       switch(dataToProcess.dataType) {
-        case("GDP"): {
-          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.CD?date=${selectedYear}&format=json`)
-        }
-        case("GDP Per Capita"): {
-          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.PCAP.CD?date=${selectedYear}&format=json`)
-        }
-        case("GDP Growth"): {
-          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.KD.ZG?date=${selectedYear}&format=json`)
-        }       
-        case("Population"): {
-          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/SP.POP.TOTL?date=${selectedYear}&format=json`)
-        }
-        case("Population Density"): {
-          return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/EN.POP.DNST?date=${selectedYear}&format=json`)
-        } 
-        default: {
-          setLoader(false)
-          return null
-        }
+      case("GDP"): {
+        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.CD?date=${selectedYear}&format=json`)
       }
+      case("GDP Per Capita"): {
+        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.PCAP.CD?date=${selectedYear}&format=json`)
+      }
+      case("GDP Growth"): {
+        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.KD.ZG?date=${selectedYear}&format=json`)
+      }       
+      case("Population"): {
+        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/SP.POP.TOTL?date=${selectedYear}&format=json`)
+      }
+      case("Population Density"): {
+        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/EN.POP.DNST?date=${selectedYear}&format=json`)
+      } 
+      default: {
+        setLoader(false)
+        return null
+      }}
     }
     setLoader(true)
     const response = await determineResponseType()
@@ -83,7 +82,7 @@ export const InteractiveMapEurope = () => {
     if(data) { 
       //fetch data of only relevant countries and set it to state:
       const relevantCountries = determineRelevantStates()
-      const newArr = data[1].filter((state:any) => relevantCountries.includes(state.country.id))
+      const newArr = data[1].filter((state: CountryData) => relevantCountries.includes(state.country.id))
       setCountryData(newArr)
       setLoader(false)
     }
@@ -92,7 +91,6 @@ export const InteractiveMapEurope = () => {
   useEffect(() => {
     if (dataToProcess.dataType === "None") {return setCountryData([])} //reset map if "None" is selected
     fetchData(dataToProcess.selectedYear)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataToProcess])
 
   useEffect(() => {
@@ -103,14 +101,14 @@ export const InteractiveMapEurope = () => {
 
   return (
     <main style={{marginLeft: 20, marginRight: 40}}>
-    <DataCustomization loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
-    <MainContainer>
-      <MapContainer>
-        <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} mapColor={mapColor} />
-      </MapContainer>
-      <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} year={dataToProcess.selectedYear} />
-    </MainContainer>
-    <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} setMapColor={setMapColor}/>
+      <DataCustomization loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
+      <MainContainer>
+        <MapContainer>
+          <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} mapColor={mapColor} />
+        </MapContainer>
+        <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} />
+      </MainContainer>
+      <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} setMapColor={setMapColor}/>
     </main>
   )
 }

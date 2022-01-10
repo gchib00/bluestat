@@ -1,7 +1,7 @@
-import { Button, CircularProgress, InputLabel, MenuItem, Select, TextField } from '@mui/material'
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { DataToProcess } from '../types'
+import React, { useState } from "react"
+import { Button, CircularProgress, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import styled from "styled-components"
+import { DataToProcess } from "../types"
 
 //styles:
 const Container = styled.div`
@@ -68,14 +68,14 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
           <MenuItem value="Europe+">Europe+</MenuItem>
         </Select>
         <TextField
-            type="number"
-            sx={{width: 90, marginLeft: 1}}
-            InputProps={{ inputProps: {max: 2020, min: 1990} }}
-            size="small"    
-            defaultValue={selectedYear}      
-            label="Year"
-            onKeyDownCapture={(e) => e.preventDefault()}
-            onChange={(e) => setSelectedYear(e.target.value)}  
+          type="number"
+          sx={{width: 90, marginLeft: 1}}
+          InputProps={{ inputProps: {max: 2020, min: 1990} }}
+          size="small"    
+          defaultValue={selectedYear}      
+          label="Year"
+          onKeyDownCapture={(e) => e.preventDefault()}
+          onChange={(e) => setSelectedYear(e.target.value)}  
         />
       </FormContainer>
       <Button 
