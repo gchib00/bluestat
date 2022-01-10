@@ -26,17 +26,28 @@ export const StatesList = ({sortedCountryList, dataType}: Props) => {
     { id: "value", label: "Value", minWidth: 40 }
   ]
   const rows: Row[] = sortedCountryList.map(data => {
-    return {
-      name: data.country.value,
-      code: data.country.id,
-      value: data.value ? //format numbers to make them more readable (or return n/a if value is missing):
-        data.value.toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "n/a"
-    } 
+    //if value is shown in %, render in .toFixed(2) to show value more clearly, else render in .toFixed()
+    if (dataType.includes("Growth")) {
+      return {
+        name: data.country.value,
+        code: data.country.id,
+        value: data.value ? //format numbers to make them more readable (or return n/a if value is missing):
+          data.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "n/a"
+      } 
+    } else {
+      return {
+        name: data.country.value,
+        code: data.country.id,
+        value: data.value ? //format numbers to make them more readable (or return n/a if value is missing):
+          data.value.toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "n/a"
+      } 
+    }
   }).reverse() //reverse arr so that the values are listed from highest to lowest
   const getDataDescription = () => {
     switch(dataType){
     case("Population"): {return "Population per state"}
     case("Population Density"): {return "Population density (inhabitants per sq.km)"}
+    case("Population Growth"): {return "Percentage of annual population growth"}
     case("GDP"): {return "GDP per state (in USD)"}
     case("GDP Per Capita"): {return "GDP per capita per state (in USD)"}
     case("GDP Growth"): {return "Percentage of annual GDP growth per state"}

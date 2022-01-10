@@ -56,7 +56,8 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
           <MenuItem value="GDP Per Capita">GDP Per Capita</MenuItem>
           <MenuItem value="GDP Growth">GDP Growth</MenuItem>
           <MenuItem value="Population">Population</MenuItem>
-          <MenuItem value="Population Density">Population Density (people per sq.km)</MenuItem>
+          <MenuItem value="Population Density">Population Density</MenuItem>
+          <MenuItem value="Population Growth">Population Growth</MenuItem>
         </Select>
         <Select
           value={visibleCountries}

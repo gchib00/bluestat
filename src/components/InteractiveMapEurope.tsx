@@ -70,6 +70,9 @@ export const InteractiveMapEurope = () => {
       case("Population Density"): {
         return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/EN.POP.DNST?date=${selectedYear}&format=json`)
       } 
+      case("Population Growth"): {
+        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/SP.POP.GROW?date=${selectedYear}&format=json`)
+      }
       default: {
         setLoader(false)
         return null
