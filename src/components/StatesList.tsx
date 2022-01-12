@@ -1,7 +1,17 @@
 import React from "react"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { CountryData } from "../types"
+import styled from "styled-components"
 
+//styling:
+const MainContainer = styled.div`
+  width: "40vw", ;
+  text-align: "center";
+  @media (max-width: 768px) {
+    width: 90vw;
+    margin: 0rem 2rem 3rem 0rem;
+  }
+`
 interface Props {
   sortedCountryList: CountryData[];
   dataType: string;
@@ -56,7 +66,7 @@ export const StatesList = ({sortedCountryList, dataType}: Props) => {
   }
   if (sortedCountryList.length < 1) {return null} //hide component if there is no data to display
   return (
-    <div style={{width: "40vw", textAlign: "center"}}>
+    <MainContainer>
       <Typography variant="h5" component="h5" sx={{width: "40vw", marginBottom: "6px"}}>
         {getDataDescription()}
       </Typography>
@@ -100,6 +110,6 @@ export const StatesList = ({sortedCountryList, dataType}: Props) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </MainContainer>
   )
 }

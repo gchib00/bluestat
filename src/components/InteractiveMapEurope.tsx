@@ -8,9 +8,19 @@ import { SecondaryDataCustomization } from "./SecondaryDataCustomization"
 
 //stlying:
 const MainContainer = styled.main`
+  margin: 0px 40px 0px 40px;
+  @media (max-width: 768px) {
+    margin: 0px 10px 0px 10px;
+  }
+`
+const ContentContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 `
 const MapContainer = styled.div`
   width: 48.6vw;
@@ -21,6 +31,10 @@ const MapContainer = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    width: 90vw;
+    margin: 0rem 2rem 3rem 0rem;
+  }
 `
 //relevant countries - for filtering worldbank data:
 const euStates=["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"]
@@ -103,15 +117,15 @@ export const InteractiveMapEurope = () => {
   }, [countryData])
 
   return (
-    <main style={{marginLeft: 20, marginRight: 40}}>
+    <MainContainer>
       <DataCustomization loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
-      <MainContainer>
+      <ContentContainer>
         <MapContainer>
           <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} mapColor={mapColor} />
         </MapContainer>
         <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} />
-      </MainContainer>
+      </ContentContainer>
       <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} setMapColor={setMapColor}/>
-    </main>
+    </MainContainer>
   )
 }

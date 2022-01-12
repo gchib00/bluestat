@@ -11,12 +11,25 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 10px 0px 10px 6px;
+  @media (max-width: 768px) {
+    width: 90vw;
+    height: 180px;
+    justify-content: flex-start;
+    flex-wrap: wrap; 
+  }
 `
 const FormContainer = styled.form`
   display: flex;
   justify-content: space-between;
   min-width: 480px;
   align-items: center;
+  @media (max-width: 768px) {
+    max-width: 90vw;
+    height: 180px;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap; 
+  }
 `
 interface Props {
   loader: boolean;
@@ -39,7 +52,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
 
   return (
     <Container>
-      <FormContainer style={{display: "flex", justifyContent: "space-between", flexDirection: "row", width: 350}}>
+      <FormContainer>
         <InputLabel 
           sx={{fontSize: "1.1rem", color: "black"}}
           id="dataType"
