@@ -9,15 +9,15 @@ import { SecondaryDataCustomization } from "./SecondaryDataCustomization"
 //stlying:
 const MainContainer = styled.main`
   margin: 0px 40px 0px 40px;
-  @media (max-width: 768px) {
-    margin: 0px 10px 0px 10px;
+  @media (max-width: 1333px) {
+    margin: 0vh 5vw 0vh 5vw;
   }
 `
 const ContentContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  @media (max-width: 768px) {
+  @media (max-width: 1333px) {
     flex-direction: column;
     justify-content: flex-start;
   }
@@ -31,7 +31,7 @@ const MapContainer = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 768px) {
+  @media (max-width: 1333px) {
     width: 90vw;
     margin: 0rem 2rem 3rem 0rem;
   }

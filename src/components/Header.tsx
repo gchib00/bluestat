@@ -11,7 +11,7 @@ const MainContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 40px;
 `
 const Logo = styled.img`
   height: 78%;

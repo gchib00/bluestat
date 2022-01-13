@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { Button, CircularProgress, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import { Button, CircularProgress, MenuItem, Select, TextField } from "@mui/material"
 import styled from "styled-components"
 import { DataToProcess } from "../types"
+import { useMediaQuery } from "react-responsive"
 
 //styles:
 const Container = styled.div`
@@ -11,11 +12,19 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 10px 0px 10px 6px;
-  @media (max-width: 768px) {
-    width: 90vw;
+  @media (max-width: 1333px) {
+    min-width: 100%;
+    height: 120px;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 365px) {
+    min-width: 100%;
     height: 180px;
     justify-content: flex-start;
-    flex-wrap: wrap; 
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 `
 const FormContainer = styled.form`
@@ -23,13 +32,22 @@ const FormContainer = styled.form`
   justify-content: space-between;
   min-width: 480px;
   align-items: center;
-  @media (max-width: 768px) {
-    max-width: 90vw;
-    height: 180px;
-    justify-content: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap; 
+  @media (max-width: 1333px) {
+    min-width: 180px;
+    width: 320px;
+    height: 60px;
   }
+  @media (max-width: 365px) {
+    min-width: 180px;
+    width: 90vw;
+    height: 130px;
+    flex-wrap: wrap;
+  }
+`
+const DataTypeLabel = styled.label`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.1rem;
+  color: black;
 `
 interface Props {
   loader: boolean;
@@ -40,6 +58,8 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
   const [selectedYear, setSelectedYear] = useState<string>(dataToProcess.selectedYear)
   const [dataType, setDataType] = useState<string>(dataToProcess.dataType)
   const [visibleCountries, setVisibleCountries] = useState<string>(dataToProcess.visibleCountries)
+  const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" })
+  const isNarrowScreen = useMediaQuery({ query: "(max-width: 365px)" })
 
   const handleSubmit = () => {
     setDataToProcess({
@@ -53,15 +73,11 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
   return (
     <Container>
       <FormContainer>
-        <InputLabel 
-          sx={{fontSize: "1.1rem", color: "black"}}
-          id="dataType"
-        >Select Metric:
-        </InputLabel>
+        {isWideScreen ? <DataTypeLabel htmlFor="dataType">Select Metric:</DataTypeLabel> : null}
         <Select
-          labelId="dataType"
+          id="dataType"
           value={dataType}
-          sx={{width: 150, marginLeft: 1, height: 40 }}
+          sx={isNarrowScreen ? {width:"100%", marginLeft:1, height:40} : {width:150, marginLeft:1, height:40 }}
           onChange={(e) => setDataType(e.target.value)}
         >
           <MenuItem value="None">None</MenuItem>
@@ -74,7 +90,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         </Select>
         <Select
           value={visibleCountries}
-          sx={{width: 100, marginLeft: 1, height: 40 }}
+          sx={isNarrowScreen ? {width:"45%", marginLeft:1, height:40}: {width:100, marginLeft:1, height:40}}
           onChange={(e) => setVisibleCountries(e.target.value)}
         >
           <MenuItem value="EU">EU</MenuItem>
@@ -83,8 +99,8 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         </Select>
         <TextField
           type="number"
-          sx={{width: 90, marginLeft: 1}}
-          InputProps={{ inputProps: {max: 2020, min: 1990} }}
+          sx={isNarrowScreen ? {width:"45%", marginLeft:1} : {width:90, marginLeft:1}}
+          InputProps={{ inputProps: {max:2020, min:1990} }}
           size="small"    
           defaultValue={selectedYear}      
           label="Year"
@@ -92,15 +108,27 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
           onChange={(e) => setSelectedYear(e.target.value)}  
         />
       </FormContainer>
-      <Button 
-        type="submit" 
-        onClick={handleSubmit}
-        variant="contained"
-        size="large"
-        sx={{height: "40px", width: "154px"}}
-      >
-        {loader ? <CircularProgress size={"24px"} color="inherit" /> : "Render Data" }
-      </Button>
+      {isWideScreen ?
+        <Button 
+          type="submit" 
+          onClick={handleSubmit}
+          variant="contained"
+          size="large"
+          sx={{height: "40px", width: "154px"}}
+        >
+          { loader ? <CircularProgress size={"24px"} color="inherit" /> : "Render Data" }
+        </Button>
+        :
+        <Button 
+          type="submit" 
+          onClick={handleSubmit}
+          variant="contained"
+          size="large"
+          sx={{height: "40px", width: "90vw", textAlign: "center"}}
+        >
+          { loader ? <CircularProgress size={"24px"} color="inherit" /> : "Render Data" }
+        </Button>
+      }
     </Container>
   )  
 }

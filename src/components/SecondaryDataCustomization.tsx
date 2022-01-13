@@ -9,7 +9,7 @@ const LowerContainer = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  @media (max-width: 768px) {
+  @media (max-width: 1333px) {
     width: 92vw;
     margin: 0rem 2rem 0rem 0rem;
     flex-direction: row;
