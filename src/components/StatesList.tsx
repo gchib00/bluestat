@@ -1,15 +1,28 @@
 import React from "react"
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { CountryData } from "../types"
 import styled from "styled-components"
 
 //styling:
 const MainContainer = styled.div`
-  width: "40vw", ;
+  width: 34vw;
   text-align: "center";
-  @media (max-width: 768px) {
+  margin-left: 0px;
+  @media (max-width: 1333px) {
+    width: 60vw;
+    margin: 0rem 2rem 3rem 0rem;
+  }
+  @media (max-width: 900px) {
     width: 90vw;
     margin: 0rem 2rem 3rem 0rem;
+  }
+`
+const Description = styled.h2`
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin: 35px 0px 12px 0px;
+  @media (max-width: 365px) {
+    font-size: 0.9rem;
   }
 `
 interface Props {
@@ -67,9 +80,9 @@ export const StatesList = ({sortedCountryList, dataType}: Props) => {
   if (sortedCountryList.length < 1) {return null} //hide component if there is no data to display
   return (
     <MainContainer>
-      <Typography variant="h5" component="h5" sx={{width: "40vw", marginBottom: "6px"}}>
+      <Description>
         {getDataDescription()}
-      </Typography>
+      </Description>
       <TableContainer sx={{height: "40vh"}}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
