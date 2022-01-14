@@ -8,9 +8,15 @@ import { SecondaryDataCustomization } from "./SecondaryDataCustomization"
 
 //stlying:
 const MainContainer = styled.main`
-  margin: 0px 40px 0px 40px;
+  width: 90vw;
+  margin: 0px 2vw 0px 2vw;
   @media (max-width: 1333px) {
-    margin: 0vh 5vw 0vh 5vw;
+    width: 60vw;
+    margin: 0px 20vw 0px 20vw;
+  }
+  @media (max-width: 900px) {
+    width: 90vw;
+    margin: 0px 2vw 0px 2vw;
   }
 `
 const ContentContainer = styled.div`
@@ -18,6 +24,12 @@ const ContentContainer = styled.div`
   justify-content: space-between;
   flex-direction: row;
   @media (max-width: 1333px) {
+    width: 60vw;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  @media (max-width: 900px) {
+    width: 90vw;
     flex-direction: column;
     justify-content: flex-start;
   }
@@ -25,15 +37,20 @@ const ContentContainer = styled.div`
 const MapContainer = styled.div`
   width: 48.6vw;
   min-height: 250px;
-  margin: 0px 0px 0px 4px;
+  margin: 0px 4px 0px 4px;
   border-radius: 4px;
   border: 3px solid black;
   display:flex;
   justify-content: center;
   align-items: center;
   @media (max-width: 1333px) {
+    width: 60vw;
+  }
+  @media (max-width: 900px) {
     width: 90vw;
-    margin: 0rem 2rem 3rem 0rem;
+  }
+  @media (max-width: 365px) {
+    min-height: 130px;
   }
 `
 //relevant countries - for filtering worldbank data:

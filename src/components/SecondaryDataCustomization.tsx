@@ -10,12 +10,16 @@ const LowerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   @media (max-width: 1333px) {
+    width: 60vw;
+    margin: 0rem 2rem 0rem 0rem;
+    flex-direction: row;
+  }
+  @media (max-width: 900px) {
     width: 92vw;
     margin: 0rem 2rem 0rem 0rem;
     flex-direction: row;
   }
 `
-
 interface Props {
   dataToProcess: DataToProcess;
   setDataToProcess: React.Dispatch<React.SetStateAction<DataToProcess>>;

@@ -38,9 +38,10 @@ const FormContainer = styled.form`
     height: 60px;
   }
   @media (max-width: 365px) {
-    min-width: 180px;
-    width: 90vw;
+    min-width: 0px;
+    width: 100%;
     height: 130px;
+    margin: auto;
     flex-wrap: wrap;
   }
 `
@@ -48,6 +49,7 @@ const DataTypeLabel = styled.label`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.1rem;
   color: black;
+  margin-right: 8px;
 `
 interface Props {
   loader: boolean;
@@ -77,7 +79,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         <Select
           id="dataType"
           value={dataType}
-          sx={isNarrowScreen ? {width:"100%", marginLeft:1, height:40} : {width:150, marginLeft:1, height:40 }}
+          sx={isNarrowScreen ? {width:"100%", height:40} : {width:150, height:40 }}
           onChange={(e) => setDataType(e.target.value)}
         >
           <MenuItem value="None">None</MenuItem>
@@ -90,7 +92,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         </Select>
         <Select
           value={visibleCountries}
-          sx={isNarrowScreen ? {width:"45%", marginLeft:1, height:40}: {width:100, marginLeft:1, height:40}}
+          sx={isNarrowScreen ? {width:"45%", height:40}: {width:100, marginLeft:1, height:40}}
           onChange={(e) => setVisibleCountries(e.target.value)}
         >
           <MenuItem value="EU">EU</MenuItem>
@@ -99,7 +101,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         </Select>
         <TextField
           type="number"
-          sx={isNarrowScreen ? {width:"45%", marginLeft:1} : {width:90, marginLeft:1}}
+          sx={isNarrowScreen ? {width:"45%", marginLeft:1} : {width:100, marginLeft:1}}
           InputProps={{ inputProps: {max:2020, min:1990} }}
           size="small"    
           defaultValue={selectedYear}      
@@ -124,7 +126,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
           onClick={handleSubmit}
           variant="contained"
           size="large"
-          sx={{height: "40px", width: "90vw", textAlign: "center"}}
+          sx={{height: "40px", width: "100%", textAlign: "center"}}
         >
           { loader ? <CircularProgress size={"24px"} color="inherit" /> : "Render Data" }
         </Button>
