@@ -25,6 +25,9 @@ const SliderDiv = styled.div`
   border-radius: 8px 0px 0px 8px;
   transition: 500ms;
   background-color: #ece8e8;
+  @media (max-width: 400px) {
+    height: 26px;
+  }
 `
 const PaletteButton = styled.button`
   z-index: 2;
@@ -41,10 +44,20 @@ const PaletteButton = styled.button`
   &:active {
     box-shadow: 0px 0px 0px 0px;
   }
+  @media (max-width: 400px) {
+    width: 34px;
+    height: 28px;
+    padding: 3px;
+  }
 `
 const PaletteIcon = styled.img`
   width: 36px;
   height: 100%;
+  @media (max-width: 400px) {
+    width: 24px;
+    height: 20px;
+    padding: 3px;
+  }
 `
 const ColorPalette = styled.div`
   display: flex;
@@ -52,6 +65,9 @@ const ColorPalette = styled.div`
   height: 100%;
   width: 70%;
   align-items: center;
+  @media (max-width: 400px) {
+    width: 64%;
+  }
 `
 const ColorIcon = styled.img`
   width: 16px;
@@ -71,10 +87,11 @@ const visibleSliderContent = {
 }
 
 interface Props { 
+  mapColor: Color;
   setMapColor: React.Dispatch<React.SetStateAction<Color>>;
 }
 
-export const ColorSelector = ({setMapColor}: Props) => {
+export const ColorSelector = ({mapColor, setMapColor}: Props) => {
   const [slider, setSlider] = useState("0px")
   const [sliderContent, setSliderContent] = useState(invisibleSliderContent)
 
@@ -87,14 +104,22 @@ export const ColorSelector = ({setMapColor}: Props) => {
       setSlider("0px")
     }
   }
+  const selected = (color: string) => {
+    if (color === mapColor) {
+      return{ backgroundColor: "black", padding: 1, borderRadius: 10}
+    }
+  }
 
   return(
     <MainContainer>
       <SliderDiv style={{width: slider}}>
         <ColorPalette style={sliderContent}>
-          <ColorIcon src={BlueSVG} alt="blue color" onClick={() => setMapColor("blue")}/>
-          <ColorIcon src={RedSVG} alt="red color" onClick={() => setMapColor("red")}/>
-          <ColorIcon src={GreenSVG} alt="green color" onClick={() => setMapColor("green")}/>
+          <ColorIcon style={selected("blue")} 
+            src={BlueSVG} alt="blue color" onClick={() => setMapColor("blue")}/>
+          <ColorIcon style={selected("red")} 
+            src={RedSVG} alt="red color" onClick={() => setMapColor("red")}/>
+          <ColorIcon style={selected("green")} 
+            src={GreenSVG} alt="green color" onClick={() => setMapColor("green")}/>
         </ColorPalette>
       </SliderDiv>
       <PaletteButton onClick={handleClick}>

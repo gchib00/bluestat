@@ -5,6 +5,7 @@ import { Color, CountryData, DataToProcess } from "../types"
 import { DataCustomization } from "./DataCustomization"
 import { StatesList } from "./StatesList"
 import { SecondaryDataCustomization } from "./SecondaryDataCustomization"
+import { useMediaQuery } from "react-responsive"
 
 //stlying:
 const MainContainer = styled.main`
@@ -67,6 +68,7 @@ export const InteractiveMapEurope = () => {
   const [dataToProcess, setDataToProcess] = useState<DataToProcess>({
     dataType: "None", selectedYear: "2019", visibleCountries: "EU", microStates: false
   })
+  const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" })
 
   const determineRelevantStates = () => { //depending on user"s choice, determine which countries should be included in the data
     let relevantStates = []
@@ -140,9 +142,10 @@ export const InteractiveMapEurope = () => {
         <MapContainer>
           <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} mapColor={mapColor} />
         </MapContainer>
+        {isWideScreen ? null : <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} mapColor={mapColor} setMapColor={setMapColor}/>}
         <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} />
       </ContentContainer>
-      <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} setMapColor={setMapColor}/>
+      {isWideScreen ? <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} mapColor={mapColor} setMapColor={setMapColor}/> : null}
     </MainContainer>
   )
 }

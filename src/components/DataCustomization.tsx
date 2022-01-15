@@ -30,11 +30,11 @@ const Container = styled.div`
 const FormContainer = styled.form`
   display: flex;
   justify-content: space-between;
-  min-width: 480px;
+  min-width: 300px;
   align-items: center;
   @media (max-width: 1333px) {
     min-width: 180px;
-    width: 320px;
+    width: 350px;
     height: 60px;
   }
   @media (max-width: 365px) {
@@ -45,12 +45,12 @@ const FormContainer = styled.form`
     flex-wrap: wrap;
   }
 `
-const DataTypeLabel = styled.label`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.1rem;
-  color: black;
-  margin-right: 8px;
-`
+// const DataTypeLabel = styled.label`
+//   font-family: Arial, Helvetica, sans-serif;
+//   font-size: 1.1rem;
+//   color: black;
+//   margin-right: 8px;
+// `
 interface Props {
   loader: boolean;
   dataToProcess: DataToProcess;
@@ -75,11 +75,12 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
   return (
     <Container>
       <FormContainer>
-        {isWideScreen ? <DataTypeLabel htmlFor="dataType">Select Metric:</DataTypeLabel> : null}
+        {/* {isWideScreen ? <DataTypeLabel htmlFor="dataType">Select Metric:</DataTypeLabel> : null} */}
         <Select
           id="dataType"
           value={dataType}
-          sx={isNarrowScreen ? {width:"100%", height:40} : {width:150, height:40 }}
+          renderValue={(selectedVal) => selectedVal === "None" ? "Select Data-Type" : dataType}
+          sx={isNarrowScreen ? {width:"100%", height:40} : {width:190, height:40 }}
           onChange={(e) => setDataType(e.target.value)}
         >
           <MenuItem value="None">None</MenuItem>
@@ -101,7 +102,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         </Select>
         <TextField
           type="number"
-          sx={isNarrowScreen ? {width:"45%", marginLeft:1} : {width:100, marginLeft:1}}
+          sx={isNarrowScreen ? {width:"45%", marginLeft:1} : {width:120, marginLeft:1}}
           InputProps={{ inputProps: {max:2020, min:1990} }}
           size="small"    
           defaultValue={selectedYear}      

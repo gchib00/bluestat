@@ -2,12 +2,12 @@ import React from "react"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { CountryData } from "../types"
 import styled from "styled-components"
+import { useMediaQuery } from "react-responsive"
 
 //styling:
 const MainContainer = styled.div`
   width: 34vw;
   text-align: "center";
-  margin-left: 0px;
   @media (max-width: 1333px) {
     width: 60vw;
     margin: 0rem 2rem 3rem 0rem;
@@ -43,11 +43,16 @@ interface Row {
 }
 
 export const StatesList = ({sortedCountryList, dataType}: Props) => {
+  const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" })
+  const isNarrowScreen = useMediaQuery({ query: "(max-width: 365px)" })
   const columns: Column[] = [
     { id: "name", label: "State", minWidth: 80 },
     { id: "code", label: "Code", minWidth: 30 },
     { id: "value", label: "Value", minWidth: 40 }
   ]
+  if (isNarrowScreen) { //remove "code" column if device is narrow (otherwise it won't fit in view; it's the least important column)
+    columns.splice(1,1)
+  }
   const rows: Row[] = sortedCountryList.map(data => {
     //if value is shown in %, render in .toFixed(2) to show value more clearly, else render in .toFixed()
     if (dataType.includes("Growth")) {
@@ -83,7 +88,7 @@ export const StatesList = ({sortedCountryList, dataType}: Props) => {
       <Description>
         {getDataDescription()}
       </Description>
-      <TableContainer sx={{height: "40vh"}}>
+      <TableContainer sx={isWideScreen ? {height: "40vh"} : null}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
