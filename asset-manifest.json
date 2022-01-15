@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/bluestat/static/js/main.7d09aedc.js",
+    "main.js": "/bluestat/static/js/main.3633d88f.js",
     "static/media/palette.svg": "/bluestat/static/media/palette.520dc1052beb60c5c536b5a7b125fa25.svg",
     "static/media/green-circle.svg": "/bluestat/static/media/green-circle.18c4fac489c986a68f2c49f09efaf501.svg",
     "static/media/blue-circle.svg": "/bluestat/static/media/blue-circle.c5ba67d99e3dd7633199dd587d187a5c.svg",
     "static/media/red-circle.svg": "/bluestat/static/media/red-circle.a8866b39edf7fd577c87dd3c1420ddd4.svg",
     "index.html": "/bluestat/index.html",
-    "main.7d09aedc.js.map": "/bluestat/static/js/main.7d09aedc.js.map"
+    "main.3633d88f.js.map": "/bluestat/static/js/main.3633d88f.js.map"
   },
   "entrypoints": [
-    "static/js/main.7d09aedc.js"
+    "static/js/main.3633d88f.js"
   ]
 }
