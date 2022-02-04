@@ -40,17 +40,18 @@ const MapContainer = styled.div`
   min-height: 250px;
   margin: 0px 4px 0px 4px;
   border-radius: 4px;
-  border: 3px solid black;
+  border: 2px solid black;
   display:flex;
   justify-content: center;
   align-items: center;
+  background-color: black;
   @media (max-width: 1333px) {
     width: 60vw;
   }
   @media (max-width: 900px) {
     width: 90vw;
   }
-  @media (max-width: 365px) {
+  @media (max-width: 415px) {
     min-height: 130px;
   }
 `

@@ -17,7 +17,7 @@ const LowerContainer = styled.div`
   }
   @media (max-width: 900px) {
     width: 90vw;
-    margin: 0rem 2rem 0rem 0rem;
+    margin: 0.4rem 2rem 0rem 0rem;
     flex-direction: row;
   }
 `
@@ -33,7 +33,7 @@ export const SecondaryDataCustomization = ({dataToProcess, setDataToProcess, map
   const handleCheckboxClick = () => {
     setDataToProcess({...dataToProcess, microStates: !showMicroStates})
   }
-  const isNarrowScreen = useMediaQuery({ query: "(max-width: 385px)" })
+  const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" })
 
   return (
     <LowerContainer>

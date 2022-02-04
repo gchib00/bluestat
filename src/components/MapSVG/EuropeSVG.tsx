@@ -44,7 +44,7 @@ const SvgComponent = ({loader, sortedCountryList, mapColor}: Props) => {
   }
 
   return(
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="280 250 1680 1240" style={{filter: mapDimmer()}}>
+    <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="280 250 1680 1240" style={{filter: mapDimmer()}}>
       <defs>
         <linearGradient id="a">
           <stop

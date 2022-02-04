@@ -14,13 +14,6 @@ const Container = styled.div`
   margin: 10px 0px 10px 6px;
   @media (max-width: 1333px) {
     min-width: 100%;
-    height: 120px;
-    justify-content: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  @media (max-width: 365px) {
-    min-width: 100%;
     height: 180px;
     justify-content: flex-start;
     flex-direction: row;
@@ -33,11 +26,6 @@ const FormContainer = styled.form`
   min-width: 300px;
   align-items: center;
   @media (max-width: 1333px) {
-    min-width: 180px;
-    width: 350px;
-    height: 60px;
-  }
-  @media (max-width: 365px) {
     min-width: 0px;
     width: 100%;
     height: 130px;
@@ -45,12 +33,6 @@ const FormContainer = styled.form`
     flex-wrap: wrap;
   }
 `
-// const DataTypeLabel = styled.label`
-//   font-family: Arial, Helvetica, sans-serif;
-//   font-size: 1.1rem;
-//   color: black;
-//   margin-right: 8px;
-// `
 interface Props {
   loader: boolean;
   dataToProcess: DataToProcess;
@@ -61,7 +43,12 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
   const [dataType, setDataType] = useState<string>(dataToProcess.dataType)
   const [visibleCountries, setVisibleCountries] = useState<string>(dataToProcess.visibleCountries)
   const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" })
-  const isNarrowScreen = useMediaQuery({ query: "(max-width: 365px)" })
+  const minYear=1990; const maxYear=2020
+
+  const availableYears = [] //arr for populating the "Select" element (because TextField type=number is incompatable with mobile)
+  for(let i=minYear; i<=maxYear; i++) { //populate arr with available years
+    availableYears.push(i.toString())
+  }
 
   const handleSubmit = () => {
     setDataToProcess({
@@ -75,12 +62,11 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
   return (
     <Container>
       <FormContainer>
-        {/* {isWideScreen ? <DataTypeLabel htmlFor="dataType">Select Metric:</DataTypeLabel> : null} */}
         <Select
           id="dataType"
           value={dataType}
           renderValue={(selectedVal) => selectedVal === "None" ? "Select Data-Type" : dataType}
-          sx={isNarrowScreen ? {width:"100%", height:40} : {width:190, height:40 }}
+          sx={isWideScreen ? {width:190, height:40 } : {width:"100%", height:40}}
           onChange={(e) => setDataType(e.target.value)}
         >
           <MenuItem value="None">None</MenuItem>
@@ -93,23 +79,36 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         </Select>
         <Select
           value={visibleCountries}
-          sx={isNarrowScreen ? {width:"45%", height:40}: {width:100, marginLeft:1, height:40}}
+          sx={isWideScreen ? {width:100, marginLeft:1, height:40} : {width:"45%", height:40}}
           onChange={(e) => setVisibleCountries(e.target.value)}
         >
           <MenuItem value="EU">EU</MenuItem>
           <MenuItem value="EEA">EEA</MenuItem>
           <MenuItem value="Europe+">Europe+</MenuItem>
         </Select>
-        <TextField
-          type="number"
-          sx={isNarrowScreen ? {width:"45%", marginLeft:1} : {width:120, marginLeft:1}}
-          InputProps={{ inputProps: {max:2020, min:1990} }}
-          size="small"    
-          defaultValue={selectedYear}      
-          label="Year"
-          onKeyDownCapture={(e) => e.preventDefault()}
-          onChange={(e) => setSelectedYear(e.target.value)}  
-        />
+        {isWideScreen ? //Textfield type="number" isn't suitable for mobile users. Render "Select" version instead
+          <TextField
+            type="number"
+            sx={isWideScreen ? {width:120, marginLeft:1} : {width:"45%", marginLeft:1}}
+            InputProps={{ inputProps: {max:maxYear, min:minYear} }}
+            size="small"    
+            defaultValue={selectedYear}      
+            label="Year"
+            onKeyDownCapture={(e) => e.preventDefault()}
+            onChange={(e) => setSelectedYear(e.target.value)}  
+          />
+          :
+          <Select
+            value={selectedYear}
+            sx={{width:"45%", height:40}}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            MenuProps={{ PaperProps: {sx: { maxHeight:200 }} }}
+          >
+            {availableYears.map(year => {
+              return(<MenuItem key={year} value={year}>{year}</MenuItem>) 
+            })}
+          </Select>
+        }
       </FormContainer>
       {isWideScreen ?
         <Button 

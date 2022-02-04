@@ -65,7 +65,7 @@ const ColorPalette = styled.div`
   height: 100%;
   width: 70%;
   align-items: center;
-  @media (max-width: 400px) {
+  @media (max-width: 415px) {
     width: 64%;
   }
 `

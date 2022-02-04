@@ -21,7 +21,7 @@ const Description = styled.h2`
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   margin: 35px 0px 12px 0px;
-  @media (max-width: 365px) {
+  @media (max-width: 415px) {
     font-size: 0.9rem;
   }
 `
@@ -44,7 +44,7 @@ interface Row {
 
 export const StatesList = ({sortedCountryList, dataType}: Props) => {
   const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" })
-  const isNarrowScreen = useMediaQuery({ query: "(max-width: 365px)" })
+  const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" })
   const columns: Column[] = [
     { id: "name", label: "State", minWidth: 80 },
     { id: "code", label: "Code", minWidth: 30 },
