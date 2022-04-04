@@ -70,10 +70,9 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
           onChange={(e) => setDataType(e.target.value)}
         >
           <MenuItem value="None">None</MenuItem>
-          <MenuItem value="GDP">GDP</MenuItem>
-          <MenuItem value="GDP Per Capita">GDP Per Capita</MenuItem>
           <MenuItem value="GDP Growth">GDP Growth</MenuItem>
           <MenuItem value="Population">Population</MenuItem>
+          <MenuItem value="Urban Population">Urban Population</MenuItem>
           <MenuItem value="Population Density">Population Density</MenuItem>
           <MenuItem value="Population Growth">Population Growth</MenuItem>
         </Select>

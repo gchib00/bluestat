@@ -6,26 +6,14 @@ import { determineColor } from "./determineColor"
 //styling
 const EUState = styled.path`
   transition: 500ms;
-  &:hover{
-    cursor: pointer;
-    filter: brightness(1.55);
-  }
 `
 const MicroState = styled.path`
   fill: white;
   transition: 500ms;
-  &:hover{
-    fill: #00394f;
-    cursor: pointer;
-  }
 `
 const State = styled.path`
   fill: #292929;
   transition: 500ms;
-  &:hover{
-    cursor: pointer;
-    filter: brightness(1.55);
-  }
 `
 const OuterState = styled.path`
   fill: #292929;

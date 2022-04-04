@@ -66,6 +66,7 @@ export const InteractiveMapEurope = () => {
   const [countryData, setCountryData] = useState<CountryData[]>([])
   const [sortedCountryList, setSortedCountryList] = useState<CountryData[]>([])
   const [loader, setLoader] = useState<boolean>(false) //loading animation switch
+  const [dataDesc, setDataDesc] = useState<string>("")
   const [dataToProcess, setDataToProcess] = useState<DataToProcess>({
     dataType: "None", selectedYear: "2019", visibleCountries: "EU", microStates: false
   })
@@ -74,10 +75,17 @@ export const InteractiveMapEurope = () => {
   const determineRelevantStates = () => { //depending on user"s choice, determine which countries should be included in the data
     let relevantStates = []
     switch(dataToProcess.visibleCountries){
-    case("EU"): {relevantStates = euStates; break}
-    case("EEA"): {relevantStates = euStates.concat(eeaStates); break}
-    default: {relevantStates = euStates.concat(eeaStates, otherRelevantStates)}
+    case("EU"): {
+      relevantStates = euStates
+      break
     }
+    case("EEA"): {
+      relevantStates = euStates.concat(eeaStates)
+      break
+    }
+    default: {
+      relevantStates = euStates.concat(eeaStates, otherRelevantStates)
+    }}
     if (!dataToProcess.microStates) { //filter out micro states  
       relevantStates = relevantStates.filter(state => (!microStatesList.includes(state)))
     }
@@ -86,14 +94,10 @@ export const InteractiveMapEurope = () => {
 
   const fetchData = async (selectedYear: string) => {
     const relevantStatesParam = determineRelevantStates().join(";") //create param to specify relevant countries for the api endpoint
-    
     const determineResponseType = async () => {
       switch(dataToProcess.dataType) {
-      case("GDP"): {
-        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.CD?date=${selectedYear}&format=json`)
-      }
-      case("GDP Per Capita"): {
-        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.PCAP.CD?date=${selectedYear}&format=json`)
+      case("Urban Population"): {
+        return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/SP.URB.TOTL.IN.ZS?date=${selectedYear}&format=json`)
       }
       case("GDP Growth"): {
         return fetch(`https://api.worldbank.org/v2/country/${relevantStatesParam}/indicator/NY.GDP.MKTP.KD.ZG?date=${selectedYear}&format=json`)
@@ -117,10 +121,11 @@ export const InteractiveMapEurope = () => {
     if (!response) {return null}
     const data = await response.json()
     if(data) { 
-      //fetch data of only relevant countries and set it to state:
+      //fetch data of the relevant countries only and set it to state:
       const relevantCountries = determineRelevantStates()
       const newArr = data[1].filter((state: CountryData) => relevantCountries.includes(state.country.id))
       setCountryData(newArr)
+      setDataDesc(data[1][0].indicator.value)
       setLoader(false)
     }
   }
@@ -138,13 +143,31 @@ export const InteractiveMapEurope = () => {
 
   return (
     <MainContainer>
-      <DataCustomization loader={loader} dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} />
+      <DataCustomization
+        loader={loader}
+        dataToProcess={dataToProcess}
+        setDataToProcess={setDataToProcess} 
+      />
       <ContentContainer>
         <MapContainer>
-          <EuropeSVG loader={loader} sortedCountryList={sortedCountryList} mapColor={mapColor} />
+          <EuropeSVG
+            loader={loader}
+            sortedCountryList={sortedCountryList}
+            mapColor={mapColor} 
+          />
         </MapContainer>
-        {isWideScreen ? null : <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} mapColor={mapColor} setMapColor={setMapColor}/>}
-        <StatesList sortedCountryList={sortedCountryList} dataType={dataToProcess.dataType} />
+        {isWideScreen ? null : 
+          <SecondaryDataCustomization
+            dataToProcess={dataToProcess}
+            setDataToProcess={setDataToProcess}
+            mapColor={mapColor}
+            setMapColor={setMapColor}
+          />}
+        <StatesList
+          dataDesc={dataDesc}
+          sortedCountryList={sortedCountryList}
+          dataType={dataToProcess.dataType}
+        />
       </ContentContainer>
       {isWideScreen ? <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} mapColor={mapColor} setMapColor={setMapColor}/> : null}
     </MainContainer>

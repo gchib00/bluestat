@@ -26,8 +26,9 @@ const Description = styled.h2`
   }
 `
 interface Props {
-  sortedCountryList: CountryData[];
+  dataDesc: string;
   dataType: string;
+  sortedCountryList: CountryData[];
 }
 interface Column {
   id: string;
@@ -42,7 +43,7 @@ interface Row {
   value: string|number;
 }
 
-export const StatesList = ({sortedCountryList, dataType}: Props) => {
+export const StatesList = ({dataDesc, sortedCountryList, dataType}: Props) => {
   const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" })
   const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" })
   const columns: Column[] = [
@@ -71,22 +72,11 @@ export const StatesList = ({sortedCountryList, dataType}: Props) => {
       } 
     }
   }).reverse() //reverse arr so that the values are listed from highest to lowest
-  const getDataDescription = () => {
-    switch(dataType){
-    case("Population"): {return "Population per state"}
-    case("Population Density"): {return "Population density (inhabitants per sq.km)"}
-    case("Population Growth"): {return "Percentage of annual population growth"}
-    case("GDP"): {return "GDP per state (in USD)"}
-    case("GDP Per Capita"): {return "GDP per capita per state (in USD)"}
-    case("GDP Growth"): {return "Percentage of annual GDP growth per state"}
-    default: return null
-    }
-  }
   if (sortedCountryList.length < 1) {return null} //hide component if there is no data to display
   return (
     <MainContainer>
       <Description>
-        {getDataDescription()}
+        {dataDesc}
       </Description>
       <TableContainer sx={isWideScreen ? {height: "40vh"} : null}>
         <Table stickyHeader aria-label="sticky table">
