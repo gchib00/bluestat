@@ -22,7 +22,7 @@
     ],
     "rules": {
         "indent": ["error", 2],
-        "semi": [2, "never"],
+        "semi": [2, "always"],
         "react-hooks/exhaustive-deps": "off",
         "quotes": [2, "double"]
     }
