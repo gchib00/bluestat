@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LogoImage from "../static/logo.png";
+import { DownloadMapButton } from "./DownloadMapButton";
 
 const MainContainer = styled.header`
   background-color: white;
@@ -8,10 +9,15 @@ const MainContainer = styled.header`
   box-shadow: 0px 0px 2px 0px;
   height: 60px;
   width: 100%;
+  margin-bottom: 40px;
+  padding: 0rem 2.2vw 0rem 1.2vw;
+`;
+const ContentContainer = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
 `;
 const Logo = styled.img`
   height: 78%;
@@ -22,7 +28,10 @@ const Logo = styled.img`
 export const Header = () => {
   return (
     <MainContainer>
-      <Logo src={LogoImage} />
+      <ContentContainer>
+        <Logo src={LogoImage} />
+        <DownloadMapButton />
+      </ContentContainer>
     </MainContainer>
   );
 };
