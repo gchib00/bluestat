@@ -1,12 +1,12 @@
 import React from "react";
 import { Header } from "./components/Header";
-import { InteractiveMapEurope } from "./components/InteractiveMapEurope";
+import { MapContainer } from "./components/MapContainer";
 
 function App() {
   return (
     <div>
       <Header />
-      <InteractiveMapEurope />
+      <MapContainer />
     </div>
   );
 }

@@ -1,24 +1,23 @@
-import React from "react"
-import styled from "styled-components"
-import { Color, CountryData } from "../../types"
-import { determineColor } from "./determineColor"
+import React from "react";
+import styled from "styled-components";
+import { Color, CountryData } from "../../types";
+import { determineColor } from "./determineColor";
 
-//styling
 const EUState = styled.path`
   transition: 500ms;
-`
+`;
 const MicroState = styled.path`
   fill: white;
   transition: 500ms;
-`
+`;
 const State = styled.path`
   fill: #292929;
   transition: 500ms;
-`
+`;
 const OuterState = styled.path`
   fill: #292929;
-`
-const Background = styled.path``
+`;
+const Background = styled.path``;
 //types:
 interface Props {
   loader: boolean;
@@ -27,10 +26,11 @@ interface Props {
 }
 const SvgComponent = ({loader, sortedCountryList, mapColor}: Props) => {
   const mapDimmer = () => { //turn on dimmer when the map data is loading
-    if (!loader) {return "brightness(1)"}
-    return "brightness(0.45)"
-  }
-
+    if (!loader) {
+      return "brightness(1)";
+    }
+    return "brightness(0.45)";
+  };
   return(
     <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="280 250 1680 1240" style={{filter: mapDimmer()}}>
       <defs>
@@ -890,6 +890,7 @@ const SvgComponent = ({loader, sortedCountryList, mapColor}: Props) => {
         />
       </g>
     </svg>
-  )
-}
-export default SvgComponent
+  );
+};
+
+export default SvgComponent;

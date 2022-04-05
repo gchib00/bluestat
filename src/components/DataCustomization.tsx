@@ -1,10 +1,9 @@
-import React, { useState } from "react"
-import { Button, CircularProgress, MenuItem, Select, TextField } from "@mui/material"
-import styled from "styled-components"
-import { DataToProcess } from "../types"
-import { useMediaQuery } from "react-responsive"
+import React, { useState } from "react";
+import { Button, CircularProgress, MenuItem, Select, TextField } from "@mui/material";
+import styled from "styled-components";
+import { DataToProcess } from "../types";
+import { useMediaQuery } from "react-responsive";
 
-//styles:
 const Container = styled.div`
   width: 48.6vw;
   height: 40px;
@@ -19,7 +18,7 @@ const Container = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
   }
-`
+`;
 const FormContainer = styled.form`
   display: flex;
   justify-content: space-between;
@@ -32,22 +31,22 @@ const FormContainer = styled.form`
     margin: auto;
     flex-wrap: wrap;
   }
-`
+`;
 interface Props {
   loader: boolean;
   dataToProcess: DataToProcess;
   setDataToProcess: React.Dispatch<React.SetStateAction<DataToProcess>>;
 }
 export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Props) => {
-  const [selectedYear, setSelectedYear] = useState<string>(dataToProcess.selectedYear)
-  const [dataType, setDataType] = useState<string>(dataToProcess.dataType)
-  const [visibleCountries, setVisibleCountries] = useState<string>(dataToProcess.visibleCountries)
-  const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" })
-  const minYear=1990; const maxYear=2020
+  const [selectedYear, setSelectedYear] = useState<string>(dataToProcess.selectedYear);
+  const [dataType, setDataType] = useState<string>(dataToProcess.dataType);
+  const [visibleCountries, setVisibleCountries] = useState<string>(dataToProcess.visibleCountries);
+  const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" });
+  const minYear=1990; const maxYear=2020;
 
-  const availableYears = [] //arr for populating the "Select" element (because TextField type=number is incompatable with mobile)
+  const availableYears = []; //arr for populating the "Select" element (because TextField type=number is incompatable with mobile)
   for(let i=minYear; i<=maxYear; i++) { //populate arr with available years
-    availableYears.push(i.toString())
+    availableYears.push(i.toString());
   }
 
   const handleSubmit = () => {
@@ -56,8 +55,8 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
       visibleCountries: visibleCountries,
       selectedYear: selectedYear,
       microStates: dataToProcess.microStates
-    })
-  }
+    });
+  };
 
   return (
     <Container>
@@ -104,7 +103,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
             MenuProps={{ PaperProps: {sx: { maxHeight:200 }} }}
           >
             {availableYears.map(year => {
-              return(<MenuItem key={year} value={year}>{year}</MenuItem>) 
+              return(<MenuItem key={year} value={year}>{year}</MenuItem>);
             })}
           </Select>
         }
@@ -131,5 +130,5 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         </Button>
       }
     </Container>
-  )  
-}
+  );
+};

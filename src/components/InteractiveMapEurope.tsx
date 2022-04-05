@@ -7,19 +7,6 @@ import { StatesList } from "./StatesList";
 import { SecondaryDataCustomization } from "./SecondaryDataCustomization";
 import { useMediaQuery } from "react-responsive";
 
-//stlying:
-const MainContainer = styled.main`
-  width: 90vw;
-  margin: 0px 2vw 0px 2vw;
-  @media (max-width: 1333px) {
-    width: 60vw;
-    margin: 0px 20vw 0px 20vw;
-  }
-  @media (max-width: 900px) {
-    width: 90vw;
-    margin: 0px 2vw 0px 2vw;
-  }
-`;
 const ContentContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -146,7 +133,7 @@ export const InteractiveMapEurope = () => {
   }, [countryData]);
 
   return (
-    <MainContainer>
+    <div>
       <DataCustomization
         loader={loader}
         dataToProcess={dataToProcess}
@@ -174,6 +161,6 @@ export const InteractiveMapEurope = () => {
         />
       </ContentContainer>
       {isWideScreen ? <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} mapColor={mapColor} setMapColor={setMapColor}/> : null}
-    </MainContainer>
+    </div>
   );
 };

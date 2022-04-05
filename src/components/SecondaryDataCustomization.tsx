@@ -1,9 +1,9 @@
-import React from "react"
-import { Checkbox, FormControlLabel, Typography } from "@mui/material"
-import { Color, DataToProcess } from "../types"
-import styled from "styled-components"
-import { ColorSelector } from "./ColorSelector"
-import { useMediaQuery } from "react-responsive"
+import React from "react";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Color, DataToProcess } from "../types";
+import styled from "styled-components";
+import { ColorSelector } from "./ColorSelector";
+import { useMediaQuery } from "react-responsive";
 
 const LowerContainer = styled.div`
   width: 48.7vw;
@@ -20,7 +20,7 @@ const LowerContainer = styled.div`
     margin: 0.4rem 2rem 0rem 0rem;
     flex-direction: row;
   }
-`
+`;
 interface Props {
   dataToProcess: DataToProcess;
   setDataToProcess: React.Dispatch<React.SetStateAction<DataToProcess>>;
@@ -29,11 +29,11 @@ interface Props {
 }
 
 export const SecondaryDataCustomization = ({dataToProcess, setDataToProcess, mapColor, setMapColor}: Props) => {
-  const showMicroStates: boolean = dataToProcess.microStates
+  const showMicroStates: boolean = dataToProcess.microStates;
   const handleCheckboxClick = () => {
-    setDataToProcess({...dataToProcess, microStates: !showMicroStates})
-  }
-  const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" })
+    setDataToProcess({...dataToProcess, microStates: !showMicroStates});
+  };
+  const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" });
 
   return (
     <LowerContainer>
@@ -54,5 +54,5 @@ export const SecondaryDataCustomization = ({dataToProcess, setDataToProcess, map
       />
       <ColorSelector mapColor={mapColor} setMapColor={setMapColor} />
     </LowerContainer> 
-  )
-}
+  );
+};

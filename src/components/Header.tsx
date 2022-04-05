@@ -1,6 +1,6 @@
-import React from "react"
-import styled from "styled-components"
-import LogoImage from "../static/logo.png"
+import React from "react";
+import styled from "styled-components";
+import LogoImage from "../static/logo.png";
 
 const MainContainer = styled.header`
   background-color: white;
@@ -12,17 +12,17 @@ const MainContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-`
+`;
 const Logo = styled.img`
   height: 78%;
   width: 120px;
   margin: 10px;
-`
+`;
 
 export const Header = () => {
   return (
     <MainContainer>
       <Logo src={LogoImage} />
     </MainContainer>
-  )
-}
+  );
+};

@@ -1,17 +1,16 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import PaletteSVG from "../static/palette.svg"
-import BlueSVG from "../static/blue-circle.svg"
-import RedSVG from "../static/red-circle.svg"
-import GreenSVG from "../static/green-circle.svg"
-import { Color } from "../types"
+import React, { useState } from "react";
+import styled from "styled-components";
+import PaletteSVG from "../static/palette.svg";
+import BlueSVG from "../static/blue-circle.svg";
+import RedSVG from "../static/red-circle.svg";
+import GreenSVG from "../static/green-circle.svg";
+import { Color } from "../types";
 
-//styling:
 const MainContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-`
+`;
 const SliderDiv = styled.div`
   z-index: 1;
   position: relative;
@@ -28,7 +27,7 @@ const SliderDiv = styled.div`
   @media (max-width: 400px) {
     height: 26px;
   }
-`
+`;
 const PaletteButton = styled.button`
   z-index: 2;
   width: 60px;
@@ -49,7 +48,7 @@ const PaletteButton = styled.button`
     height: 28px;
     padding: 3px;
   }
-`
+`;
 const PaletteIcon = styled.img`
   width: 36px;
   height: 100%;
@@ -58,7 +57,7 @@ const PaletteIcon = styled.img`
     height: 20px;
     padding: 3px;
   }
-`
+`;
 const ColorPalette = styled.div`
   display: flex;
   justify-content: space-between;
@@ -68,7 +67,7 @@ const ColorPalette = styled.div`
   @media (max-width: 415px) {
     width: 64%;
   }
-`
+`;
 const ColorIcon = styled.img`
   width: 16px;
   height: 16px;
@@ -76,15 +75,15 @@ const ColorIcon = styled.img`
     filter: brightness(50%);
     cursor: pointer;
   }
-`
+`;
 const invisibleSliderContent = {
   opacity: 0
-}
+};
 const visibleSliderContent = {
   transitionDelay: "500ms",
   transitionDuration: "300ms",
   opacity: 1
-}
+};
 
 interface Props { 
   mapColor: Color;
@@ -92,23 +91,25 @@ interface Props {
 }
 
 export const ColorSelector = ({mapColor, setMapColor}: Props) => {
-  const [slider, setSlider] = useState("0px")
-  const [sliderContent, setSliderContent] = useState(invisibleSliderContent)
+  const [slider, setSlider] = useState("0px");
+  const [sliderContent, setSliderContent] = useState(invisibleSliderContent);
 
   const handleClick = () => {
     if (slider === "0px") {
-      setSliderContent(visibleSliderContent)
-      return setSlider("100px")
+      setSliderContent(visibleSliderContent);
+      return setSlider("100px");
     } else {
-      setSliderContent(invisibleSliderContent)
-      setSlider("0px")
+      setSliderContent(invisibleSliderContent);
+      setSlider("0px");
     }
-  }
+  };
   const selected = (color: string) => {
     if (color === mapColor) {
-      return{ backgroundColor: "black", padding: 1, borderRadius: 10}
+      return {
+        backgroundColor: "black", padding: 1, borderRadius: 10
+      };
     }
-  }
+  };
 
   return(
     <MainContainer>
@@ -126,5 +127,5 @@ export const ColorSelector = ({mapColor, setMapColor}: Props) => {
         <PaletteIcon src={PaletteSVG} alt="palette icon" />
       </PaletteButton>
     </MainContainer>
-  )
-}
+  );
+};
