@@ -140,7 +140,7 @@ export const InteractiveMapEurope = () => {
         setDataToProcess={setDataToProcess} 
       />
       <ContentContainer>
-        <MapContainer>
+        <MapContainer id="mapContainer">
           <EuropeSVG
             loader={loader}
             sortedCountryList={sortedCountryList}
