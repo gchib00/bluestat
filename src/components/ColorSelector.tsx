@@ -5,6 +5,7 @@ import BlueSVG from "../static/blue-circle.svg";
 import RedSVG from "../static/red-circle.svg";
 import GreenSVG from "../static/green-circle.svg";
 import { Color } from "../types";
+import { useSearchParams } from "react-router-dom";
 
 const MainContainer = styled.div`
   display: flex;
@@ -85,14 +86,11 @@ const visibleSliderContent = {
   opacity: 1
 };
 
-interface Props { 
-  mapColor: Color;
-  setMapColor: React.Dispatch<React.SetStateAction<Color>>;
-}
-
-export const ColorSelector = ({mapColor, setMapColor}: Props) => {
+export const ColorSelector = () => {
   const [slider, setSlider] = useState("0px");
   const [sliderContent, setSliderContent] = useState(invisibleSliderContent);
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const mapColor = searchParams.get("color");
 
   const handleClick = () => {
     if (slider === "0px") {
@@ -116,11 +114,11 @@ export const ColorSelector = ({mapColor, setMapColor}: Props) => {
       <SliderDiv style={{width: slider}}>
         <ColorPalette style={sliderContent}>
           <ColorIcon style={selected("blue")} 
-            src={BlueSVG} alt="blue color" onClick={() => setMapColor("blue")}/>
+            src={BlueSVG} alt="blue color" onClick={() => setSearchParams({ color: "blue" })}/>
           <ColorIcon style={selected("red")} 
-            src={RedSVG} alt="red color" onClick={() => setMapColor("red")}/>
+            src={RedSVG} alt="red color" onClick={() => setSearchParams({ color: "red" })}/>
           <ColorIcon style={selected("green")} 
-            src={GreenSVG} alt="green color" onClick={() => setMapColor("green")}/>
+            src={GreenSVG} alt="green color" onClick={() => setSearchParams({ color: "green" })}/>
         </ColorPalette>
       </SliderDiv>
       <PaletteButton onClick={handleClick}>

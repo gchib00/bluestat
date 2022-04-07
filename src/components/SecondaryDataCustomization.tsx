@@ -4,6 +4,7 @@ import { Color, DataToProcess } from "../types";
 import styled from "styled-components";
 import { ColorSelector } from "./ColorSelector";
 import { useMediaQuery } from "react-responsive";
+import { useSearchParams } from "react-router-dom";
 
 const LowerContainer = styled.div`
   width: 48.7vw;
@@ -21,17 +22,13 @@ const LowerContainer = styled.div`
     flex-direction: row;
   }
 `;
-interface Props {
-  dataToProcess: DataToProcess;
-  setDataToProcess: React.Dispatch<React.SetStateAction<DataToProcess>>;
-  mapColor: Color;
-  setMapColor: React.Dispatch<React.SetStateAction<Color>>;
-}
 
-export const SecondaryDataCustomization = ({dataToProcess, setDataToProcess, mapColor, setMapColor}: Props) => {
-  const showMicroStates: boolean = dataToProcess.microStates;
+export const SecondaryDataCustomization = () => {
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const microStates = searchParams.get("microStates") ?? "0";
+  const showMicroStates = microStates;
   const handleCheckboxClick = () => {
-    setDataToProcess({...dataToProcess, microStates: !showMicroStates});
+    setSearchParams({ microStates: showMicroStates ? "1" : "0" });
   };
   const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" });
 
@@ -52,7 +49,7 @@ export const SecondaryDataCustomization = ({dataToProcess, setDataToProcess, map
         labelPlacement="start"
         sx={{marginLeft: 0.6}}
       />
-      <ColorSelector mapColor={mapColor} setMapColor={setMapColor} />
+      <ColorSelector />
     </LowerContainer> 
   );
 };

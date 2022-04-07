@@ -3,6 +3,7 @@ import { Button, CircularProgress, MenuItem, Select, TextField } from "@mui/mate
 import styled from "styled-components";
 import { DataToProcess } from "../types";
 import { useMediaQuery } from "react-responsive";
+import { useSearchParams } from "react-router-dom";
 
 const Container = styled.div`
   width: 48.6vw;
@@ -34,13 +35,12 @@ const FormContainer = styled.form`
 `;
 interface Props {
   loader: boolean;
-  dataToProcess: DataToProcess;
-  setDataToProcess: React.Dispatch<React.SetStateAction<DataToProcess>>;
 }
-export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Props) => {
-  const [selectedYear, setSelectedYear] = useState<string>(dataToProcess.selectedYear);
-  const [dataType, setDataType] = useState<string>(dataToProcess.dataType);
-  const [visibleCountries, setVisibleCountries] = useState<string>(dataToProcess.visibleCountries);
+export const DataCustomization = ({loader}: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const dataType = searchParams.get("dataType") as string ?? "None";
+  const selectedYear = searchParams.get("selectedYear") as string ?? "2019";
+  const visibleCountries = searchParams.get("visibleCountries") as string ?? "EU";
   const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" });
   const minYear=1990; const maxYear=2020;
 
@@ -50,12 +50,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
   }
 
   const handleSubmit = () => {
-    setDataToProcess({
-      dataType: dataType,
-      visibleCountries: visibleCountries,
-      selectedYear: selectedYear,
-      microStates: dataToProcess.microStates
-    });
+    console.log("clicked");
   };
 
   return (
@@ -66,7 +61,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
           value={dataType}
           renderValue={(selectedVal) => selectedVal === "None" ? "Select Data-Type" : dataType}
           sx={isWideScreen ? {width:190, height:40 } : {width:"100%", height:40}}
-          onChange={(e) => setDataType(e.target.value)}
+          onChange={(e) => setSearchParams({ dataType: e.target.value })}
         >
           <MenuItem value="None">None</MenuItem>
           <MenuItem value="GDP Growth">GDP Growth</MenuItem>
@@ -78,7 +73,7 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
         <Select
           value={visibleCountries}
           sx={isWideScreen ? {width:100, marginLeft:1, height:40} : {width:"45%", height:40}}
-          onChange={(e) => setVisibleCountries(e.target.value)}
+          onChange={(e) => setSearchParams({ visibleCountries: e.target.value })}
         >
           <MenuItem value="EU">EU</MenuItem>
           <MenuItem value="EEA">EEA</MenuItem>
@@ -93,13 +88,13 @@ export const DataCustomization = ({loader, dataToProcess, setDataToProcess}: Pro
             defaultValue={selectedYear}      
             label="Year"
             onKeyDownCapture={(e) => e.preventDefault()}
-            onChange={(e) => setSelectedYear(e.target.value)}  
+            onChange={(e) => setSearchParams({ selectedYear: e.target.value })}  
           />
           :
           <Select
             value={selectedYear}
             sx={{width:"45%", height:40}}
-            onChange={(e) => setSelectedYear(e.target.value)}
+            onChange={(e) => setSearchParams({ selectedYear: e.target.value })}
             MenuProps={{ PaperProps: {sx: { maxHeight:200 }} }}
           >
             {availableYears.map(year => {

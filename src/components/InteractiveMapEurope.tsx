@@ -6,6 +6,7 @@ import { DataCustomization } from "./DataCustomization";
 import { StatesList } from "./StatesList";
 import { SecondaryDataCustomization } from "./SecondaryDataCustomization";
 import { useMediaQuery } from "react-responsive";
+import { useSearchParams } from "react-router-dom";
 
 const ContentContainer = styled.div`
   display: flex;
@@ -52,19 +53,21 @@ const otherRelevantStates=["GB","CH","RU","BY","UA","MD","BA","RS","ME","MK","AL
 const microStatesList = ["LI","AD","MC"];
 
 export const InteractiveMapEurope = () => {
-  const [mapColor, setMapColor] = useState<Color>("blue");
+  const [searchParams, setSearchParams] = useSearchParams({});
   const [countryData, setCountryData] = useState<CountryData[]>([]);
   const [sortedCountryList, setSortedCountryList] = useState<CountryData[]>([]);
   const [loader, setLoader] = useState<boolean>(false); //loading animation switch
   const [dataDesc, setDataDesc] = useState<string>("");
-  const [dataToProcess, setDataToProcess] = useState<DataToProcess>({
-    dataType: "None", selectedYear: "2019", visibleCountries: "EU", microStates: false
-  });
+  const mapColor = searchParams.get("color") as Color ?? "blue";
+  const dataType = searchParams.get("dataType") as string ?? "None";
+  const selectedYear = searchParams.get("selectedYear") as string ?? "2019";
+  const visibleCountries = searchParams.get("visibleCountries") as string ?? "EU";
+  const microStates = searchParams.get("microStates") ?? "0";
   const isWideScreen = useMediaQuery({ query: "(min-width: 1333px)" });
 
   const determineRelevantStates = () => { //depending on user"s choice, determine which countries should be included in the data
     let relevantStates = [];
-    switch(dataToProcess.visibleCountries){
+    switch(visibleCountries){
     case("EU"): {
       relevantStates = euStates;
       break;
@@ -76,7 +79,7 @@ export const InteractiveMapEurope = () => {
     default: {
       relevantStates = euStates.concat(eeaStates, otherRelevantStates);
     }}
-    if (!dataToProcess.microStates) { //filter out micro states  
+    if (microStates === "0") { //filter out micro states  
       relevantStates = relevantStates.filter(state => (!microStatesList.includes(state)));
     }
     return relevantStates;
@@ -94,7 +97,7 @@ export const InteractiveMapEurope = () => {
       }
     };
     const fetchData = async () => {
-      const indicator = getIndicator(dataToProcess.dataType);
+      const indicator = getIndicator(dataType);
       if (!indicator) {
         setLoader(false);
         return null;
@@ -120,11 +123,11 @@ export const InteractiveMapEurope = () => {
   };
 
   useEffect(() => {
-    if (dataToProcess.dataType === "None") {
+    if (dataType === "None") {
       return setCountryData([]); //reset map if "None" is selected
     }
-    fetchData(dataToProcess.selectedYear);
-  }, [dataToProcess]);
+    fetchData(selectedYear);
+  }, [searchParams]);
 
   useEffect(() => {
     //re-arrange the existing data from highest to lowerst by value:
@@ -134,33 +137,24 @@ export const InteractiveMapEurope = () => {
 
   return (
     <div>
-      <DataCustomization
-        loader={loader}
-        dataToProcess={dataToProcess}
-        setDataToProcess={setDataToProcess} 
-      />
+      <DataCustomization loader={loader} />
       <ContentContainer>
         <MapContainer id="mapContainer">
           <EuropeSVG
             loader={loader}
             sortedCountryList={sortedCountryList}
-            mapColor={mapColor} 
+            mapColor={mapColor}
           />
         </MapContainer>
         {isWideScreen ? null : 
-          <SecondaryDataCustomization
-            dataToProcess={dataToProcess}
-            setDataToProcess={setDataToProcess}
-            mapColor={mapColor}
-            setMapColor={setMapColor}
-          />}
+          <SecondaryDataCustomization />}
         <StatesList
           dataDesc={dataDesc}
           sortedCountryList={sortedCountryList}
-          dataType={dataToProcess.dataType}
+          dataType={dataType}
         />
       </ContentContainer>
-      {isWideScreen ? <SecondaryDataCustomization dataToProcess={dataToProcess} setDataToProcess={setDataToProcess} mapColor={mapColor} setMapColor={setMapColor}/> : null}
+      {isWideScreen ? <SecondaryDataCustomization /> : null}
     </div>
   );
 };
