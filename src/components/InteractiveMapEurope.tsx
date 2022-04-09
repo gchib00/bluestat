@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EuropeSVG from "./MapSVG/EuropeSVG";
 import styled from "styled-components";
-import { Color, CountryData, DataToProcess } from "../types";
+import { Color, CountryData } from "../types";
 import { DataCustomization } from "./DataCustomization";
 import { StatesList } from "./StatesList";
 import { SecondaryDataCustomization } from "./SecondaryDataCustomization";
@@ -53,9 +53,10 @@ const otherRelevantStates=["GB","CH","RU","BY","UA","MD","BA","RS","ME","MK","AL
 const microStatesList = ["LI","AD","MC"];
 
 export const InteractiveMapEurope = () => {
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [searchParams] = useSearchParams();
   const [countryData, setCountryData] = useState<CountryData[]>([]);
   const [sortedCountryList, setSortedCountryList] = useState<CountryData[]>([]);
+  const [activateFetch, setActivateFetch] = useState<boolean>(false);
   const [loader, setLoader] = useState<boolean>(false); //loading animation switch
   const [dataDesc, setDataDesc] = useState<string>("");
   const mapColor = searchParams.get("color") as Color ?? "blue";
@@ -123,11 +124,12 @@ export const InteractiveMapEurope = () => {
   };
 
   useEffect(() => {
-    if (dataType === "None") {
+    if (dataType === "None" || !activateFetch) {
       return setCountryData([]); //reset map if "None" is selected
     }
     fetchData(selectedYear);
-  }, [searchParams]);
+    setActivateFetch(false);
+  }, [activateFetch]);
 
   useEffect(() => {
     //re-arrange the existing data from highest to lowerst by value:
@@ -137,7 +139,10 @@ export const InteractiveMapEurope = () => {
 
   return (
     <div>
-      <DataCustomization loader={loader} />
+      <DataCustomization 
+        setActivateFetch={setActivateFetch}
+        loader={loader}
+      />
       <ContentContainer>
         <MapContainer id="mapContainer">
           <EuropeSVG

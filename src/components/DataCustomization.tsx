@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Button, CircularProgress, MenuItem, Select, TextField } from "@mui/material";
 import styled from "styled-components";
-import { DataToProcess } from "../types";
 import { useMediaQuery } from "react-responsive";
 import { useSearchParams } from "react-router-dom";
 
@@ -34,10 +33,12 @@ const FormContainer = styled.form`
   }
 `;
 interface Props {
+  setActivateFetch: React.Dispatch<React.SetStateAction<boolean>>;
   loader: boolean;
 }
-export const DataCustomization = ({loader}: Props) => {
-  const [searchParams, setSearchParams] = useSearchParams({});
+
+export const DataCustomization = ({setActivateFetch, loader}: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const dataType = searchParams.get("dataType") as string ?? "None";
   const selectedYear = searchParams.get("selectedYear") as string ?? "2019";
   const visibleCountries = searchParams.get("visibleCountries") as string ?? "EU";
@@ -48,10 +49,17 @@ export const DataCustomization = ({loader}: Props) => {
   for(let i=minYear; i<=maxYear; i++) { //populate arr with available years
     availableYears.push(i.toString());
   }
+ 
+  const handleChange = (name: string, value: string) => {
+    searchParams.set(name, value);
+    setSearchParams(searchParams);
+  };
 
   const handleSubmit = () => {
-    console.log("clicked");
+    // setSearchParams(searchParams);
+    setActivateFetch(true);
   };
+  console.log("searchParams-", Object.fromEntries(searchParams));
 
   return (
     <Container>
@@ -61,7 +69,7 @@ export const DataCustomization = ({loader}: Props) => {
           value={dataType}
           renderValue={(selectedVal) => selectedVal === "None" ? "Select Data-Type" : dataType}
           sx={isWideScreen ? {width:190, height:40 } : {width:"100%", height:40}}
-          onChange={(e) => setSearchParams({ dataType: e.target.value })}
+          onChange={(e) => handleChange("dataType", e.target.value)}
         >
           <MenuItem value="None">None</MenuItem>
           <MenuItem value="GDP Growth">GDP Growth</MenuItem>
@@ -73,7 +81,7 @@ export const DataCustomization = ({loader}: Props) => {
         <Select
           value={visibleCountries}
           sx={isWideScreen ? {width:100, marginLeft:1, height:40} : {width:"45%", height:40}}
-          onChange={(e) => setSearchParams({ visibleCountries: e.target.value })}
+          onChange={(e) => handleChange("visibleCountries", e.target.value)}
         >
           <MenuItem value="EU">EU</MenuItem>
           <MenuItem value="EEA">EEA</MenuItem>
@@ -88,13 +96,13 @@ export const DataCustomization = ({loader}: Props) => {
             defaultValue={selectedYear}      
             label="Year"
             onKeyDownCapture={(e) => e.preventDefault()}
-            onChange={(e) => setSearchParams({ selectedYear: e.target.value })}  
+            onChange={(e) => handleChange("selectedYear", e.target.value)}  
           />
           :
           <Select
             value={selectedYear}
             sx={{width:"45%", height:40}}
-            onChange={(e) => setSearchParams({ selectedYear: e.target.value })}
+            onChange={(e) => handleChange("selectedYear", e.target.value)}
             MenuProps={{ PaperProps: {sx: { maxHeight:200 }} }}
           >
             {availableYears.map(year => {

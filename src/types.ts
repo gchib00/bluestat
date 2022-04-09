@@ -15,9 +15,3 @@ export interface CountryData {
   unit?: string;
   value: number;
 }
-export interface DataToProcess {
-  dataType: string;
-  visibleCountries: string;
-  selectedYear: string;
-  microStates: boolean;
-}

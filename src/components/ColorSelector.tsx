@@ -4,7 +4,6 @@ import PaletteSVG from "../static/palette.svg";
 import BlueSVG from "../static/blue-circle.svg";
 import RedSVG from "../static/red-circle.svg";
 import GreenSVG from "../static/green-circle.svg";
-import { Color } from "../types";
 import { useSearchParams } from "react-router-dom";
 
 const MainContainer = styled.div`
@@ -101,6 +100,11 @@ export const ColorSelector = () => {
       setSlider("0px");
     }
   };
+  const handleChange = (name: string, value: string) => {
+    searchParams.set(name, value);
+    setSearchParams(searchParams);
+  };
+  
   const selected = (color: string) => {
     if (color === mapColor) {
       return {
@@ -114,11 +118,11 @@ export const ColorSelector = () => {
       <SliderDiv style={{width: slider}}>
         <ColorPalette style={sliderContent}>
           <ColorIcon style={selected("blue")} 
-            src={BlueSVG} alt="blue color" onClick={() => setSearchParams({ color: "blue" })}/>
+            src={BlueSVG} alt="blue color" onClick={() => handleChange("color", "blue")}/>
           <ColorIcon style={selected("red")} 
-            src={RedSVG} alt="red color" onClick={() => setSearchParams({ color: "red" })}/>
+            src={RedSVG} alt="red color" onClick={() => handleChange("color", "red")}/>
           <ColorIcon style={selected("green")} 
-            src={GreenSVG} alt="green color" onClick={() => setSearchParams({ color: "green" })}/>
+            src={GreenSVG} alt="green color" onClick={() => handleChange("color", "green")}/>
         </ColorPalette>
       </SliderDiv>
       <PaletteButton onClick={handleClick}>

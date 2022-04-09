@@ -1,6 +1,5 @@
 import React from "react";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { Color, DataToProcess } from "../types";
 import styled from "styled-components";
 import { ColorSelector } from "./ColorSelector";
 import { useMediaQuery } from "react-responsive";
@@ -28,7 +27,7 @@ export const SecondaryDataCustomization = () => {
   const microStates = searchParams.get("microStates") ?? "0";
   const showMicroStates = microStates;
   const handleCheckboxClick = () => {
-    setSearchParams({ microStates: showMicroStates ? "1" : "0" });
+    setSearchParams({ ...searchParams, microStates: showMicroStates ? "1" : "0" });
   };
   const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" });
 
