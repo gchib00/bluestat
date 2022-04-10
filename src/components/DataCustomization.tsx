@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, CircularProgress, MenuItem, Select, TextField } from "@mui/material";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
@@ -56,10 +56,8 @@ export const DataCustomization = ({setActivateFetch, loader}: Props) => {
   };
 
   const handleSubmit = () => {
-    // setSearchParams(searchParams);
     setActivateFetch(true);
   };
-  console.log("searchParams-", Object.fromEntries(searchParams));
 
   return (
     <Container>

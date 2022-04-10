@@ -89,7 +89,7 @@ export const ColorSelector = () => {
   const [slider, setSlider] = useState("0px");
   const [sliderContent, setSliderContent] = useState(invisibleSliderContent);
   const [searchParams, setSearchParams] = useSearchParams({});
-  const mapColor = searchParams.get("color");
+  const mapColor = searchParams.get("color") ?? "blue";
 
   const handleClick = () => {
     if (slider === "0px") {
@@ -108,7 +108,7 @@ export const ColorSelector = () => {
   const selected = (color: string) => {
     if (color === mapColor) {
       return {
-        backgroundColor: "black", padding: 1, borderRadius: 10
+        backgroundColor: "black", padding: "0.09rem", borderRadius: 10
       };
     }
   };

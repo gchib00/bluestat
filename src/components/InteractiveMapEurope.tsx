@@ -81,6 +81,7 @@ export const InteractiveMapEurope = () => {
       relevantStates = euStates.concat(eeaStates, otherRelevantStates);
     }}
     if (microStates === "0") { //filter out micro states  
+      console.log("disabling microStates");
       relevantStates = relevantStates.filter(state => (!microStatesList.includes(state)));
     }
     return relevantStates;
@@ -125,11 +126,16 @@ export const InteractiveMapEurope = () => {
 
   useEffect(() => {
     if (dataType === "None" || !activateFetch) {
+      setActivateFetch(false);
       return setCountryData([]); //reset map if "None" is selected
     }
     fetchData(selectedYear);
     setActivateFetch(false);
   }, [activateFetch]);
+
+  useEffect(() => {
+    fetchData(selectedYear);
+  }, [microStates]);
 
   useEffect(() => {
     //re-arrange the existing data from highest to lowerst by value:

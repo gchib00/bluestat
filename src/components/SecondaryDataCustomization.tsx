@@ -25,9 +25,10 @@ const LowerContainer = styled.div`
 export const SecondaryDataCustomization = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
   const microStates = searchParams.get("microStates") ?? "0";
-  const showMicroStates = microStates;
+  const showMicroStates: boolean = microStates === "1" ? true : false;
   const handleCheckboxClick = () => {
-    setSearchParams({ ...searchParams, microStates: showMicroStates ? "1" : "0" });
+    searchParams.set("microStates", !showMicroStates ? "1" : "0");
+    setSearchParams(searchParams);
   };
   const isNarrowScreen = useMediaQuery({ query: "(max-width: 415px)" });
 
